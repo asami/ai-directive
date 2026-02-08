@@ -1,261 +1,182 @@
-# SimpleModeling Library
+# <<PROJECT NAME>>
 
-## What This Is
+> <<ONE-LINE DESCRIPTION OF THE PROJECT PURPOSE>>
+> (e.g. “A model-driven development tool for …”)
 
-SimpleModeling Library is a core semantic model library for model-driven systems.
-It defines long-lived meaning for protocol, datatype, and operation semantics so
-generated and handwritten code can share a stable runtime vocabulary.
+---
 
-This repository is not an application framework. It is the semantic substrate
-that keeps meaning stable across tools, runtimes, and adapters.
+> Note
+>
+> This README.md is a project-local document created from a template
+> and edited for human-oriented overview.
+> It is not an authoritative AI rule document.
 
-## Design Philosophy (Short)
+## Overview
 
-- Executable Specification is first-class documentation
-- Meaning > mechanics
-- Functional programming oriented (Scala)
-- Given/When/Then + Property-Based Testing
-- Example-based tests are minimized
+<<CHANGE HERE>>
+Brief description of what this product project is,
+its scope, and its primary responsibility.
 
-## How to Read This Repository (for Humans)
+This repository is a **product project** developed under an explicit
+**AI Directive**, which defines how AI systems (ChatGPT Desktop, Codex, etc.)
+must behave when interacting with this codebase.
 
-1. `README.md`
-2. `docs/rules/`
-3. `docs/spec/`
-4. `docs/design/`
-5. `src/test/scala/`
-6. `src/main/scala/`
+AI participation is treated as a **contract**, not an implicit convention.
 
-## Where the Specifications Live
+---
 
-- Executable Specifications live in `src/test/scala`.
-- Specs are organized by semantic responsibility (e.g., `org.goldenport.protocol`, `org.goldenport.scenario`).
-- Detailed style rules live in `docs/spec/spec-style.md`.
-- Test policy lives in `docs/spec/test-policy.md`.
+## AI Directive (Authoritative)
 
-## For AI / Agents
+This project adopts the **AI Directive** mounted at:
 
-AI/Agent guidance is in `AGENTS.md`, not here.
-`AGENTS.md` is the canonical entry point for automated agents.
+    ai/directive
 
-## Related Docs (Details Live Here)
+The AI Directive is managed as a **git submodule** and treated as an
+external, versioned contract shared across multiple projects.
 
-- Error and observation model: `docs/spec/error-observation-integration.md`
-- Error model exploration notes: `docs/notes/error-model-exploration.md`
-- Design and integration boundaries: `docs/design/`
-- Spec style and test policy: `docs/spec/spec-style.md`, `docs/spec/test-policy.md`
-- Rules and conventions: `docs/rules/` (see `docs/rules/type-modeling.md`)
+### Authority and Priority
 
-## Context Model (Current)
+AI behavior MUST be interpreted in the following order:
 
-- EnvironmentContext, VirtualMachineContext, and I18nContext are independent contexts.
-- ExecutionContext composes those contexts and adds no new semantics.
-- Bootstrap and factory responsibilities live in CNCF / infrastructure, not core.
-- See `docs/spec/context-overview.md` and related specs under `docs/spec/`.
+1. **AI Directive**
+   - ai/directive/core
+   - Active profile (e.g. chatgpt-desktop, codex)
+2. **Project-specific rules**
+   - docs/rules/
+3. Other documentation (docs/spec, docs/design, docs/notes, docs/journal)
+
+The AI Directive is authoritative.
+Project-specific rules may add constraints but MUST NOT implicitly override it.
+
+[FIXED — contractual section]
+
+---
+
+## AI Entry Points
+
+The following files are the **authoritative AI entry points** for this project:
+
+- AGENT.md → symlink to ai/directive/core/AGENT.md
+- RULE.md  → symlink to ai/directive/core/RULE.md
+
+AI systems MUST start from these files.
+
+No additional agent or rule files at the project root are authoritative.
+
+[FIXED — by design]
+
+---
+
+## AI Profiles Used
+
+This project uses the following AI profiles defined by the AI Directive:
+
+- **chatgpt-desktop**
+  - Interactive reasoning, design, review, and documentation
+  - Human-in-the-loop
+  - MUST NOT execute commands or modify files directly
+
+- **codex**
+  - Execution-only agent
+  - Operates strictly under explicit execution instructions
+  - MUST stop on ambiguity or unsafe conditions
+
+Profile-specific rules are defined under:
+
+    ai/directive/chatgpt-desktop/
+    ai/directive/codex/
+
+<<CHANGE HERE (OPTIONAL)>>
+Describe any project-specific restrictions or extensions
+to profile usage.
+
+---
+
+## Documentation Structure
+
+Project documentation is organized into semantic layers under docs/:
+
+- docs/notes/  
+  Exploratory notes, hypotheses, and informal records  
+  (non-normative, disposable)
+
+- docs/design/  
+  Architectural decisions, responsibility boundaries, and invariants
+
+- docs/spec/  
+  Behavioral specifications that implementations must satisfy
+
+- docs/journal/  
+  Chronological records (decisions, incidents, releases)
+
+These layers are **not interchangeable**.
+Each carries a distinct semantic weight.
+
+### Documentation Lifecycle (Authoritative)
+
+The authoritative definition of the documentation lifecycle,
+including promotion rules and interpretation constraints, is defined in:
+
+    ai/directive/core/document-lifecycle.md
+
+AI systems and contributors MUST follow that document when creating,
+moving, or interpreting documentation.
+
+[DETAILS DEFERRED TO AI DIRECTIVE]
+
+---
+
+## Project-Specific Rules
+
+Project-specific AI rules and constraints (if any) are defined under:
+
+    docs/rules/
+
+<<CHANGE HERE>>
+Describe any project-specific constraints, phase conventions,
+or explicit exceptions.
+
+If docs/rules/ is empty, no additional project-specific constraints apply.
+
+---
+
+## Repository Structure (Relevant Parts)
+
+    .
+    ├─ AGENT.md                # AI entry point (symlink)
+    ├─ RULE.md                 # AI rules entry point (symlink)
+    ├─ ai/
+    │  └─ directive/           # AI Directive (git submodule)
+    ├─ docs/
+    │  ├─ rules/               # Project-specific AI rules
+    │  ├─ spec/
+    │  ├─ design/
+    │  ├─ notes/
+    │  └─ journal/
+    └─ README.md               # This file
+
+<<CHANGE HERE (OPTIONAL)>>
+Add or remove entries if this project has additional
+top-level structures worth mentioning.
+
+---
+
+## Contribution Notes
+
+- Do NOT modify files under ai/directive/ from this repository.
+- Changes to shared AI behavior belong in the ai-directive repository.
+- Updates to the AI Directive must be recorded as submodule updates.
+- Documentation must respect the defined lifecycle and semantics.
+
+<<CHANGE HERE (OPTIONAL)>>
+Add project-specific contribution notes if required.
+
+---
 
 ## Summary
 
-- This repository defines semantic meaning, not runtime behavior.
-- Specifications live as executable code under `src/test/scala`.
-- Given/When/Then + PBT is the baseline spec style.
-- Read rules, spec, and design docs before implementation.
+This repository makes AI behavior **explicit, versioned, and reviewable**.
 
-## Further Reading
-
-The following topics are intentionally not explained in this README.
-They are documented in detail in the corresponding documents below.
-
-### Error and Observation Model
-Semantic error vocabulary and observation-based error handling.
-See:
-- `docs/spec/error-observation-integration.md`
-- `docs/notes/error-model-exploration.md`
-
-### Framework and Application Integration
-Boundaries and responsibilities between this library, frameworks, and applications.
-See:
-- `docs/design/`
-
-### Test Policy and Specification Style
-Executable Specification philosophy, test policy, and specification style rules.
-See:
-- `docs/spec/test-policy.md`
-- `docs/spec/spec-style.md`
-
-Error handling in simplemodeling-lib follows these rules:
-
-    - errors are observations, not exceptions
-    - interpretation is context-dependent
-    - reaction belongs to frameworks, not core
-
-The library provides:
-
-    - semantic error vocabulary
-    - minimal classification structures
-    - extension points for interpretation
-
-Generated CML runtime code depends on these guarantees
-to remain framework-independent.
-
-----------------------------------------------------------------------
-Integration with Frameworks and Applications
-----------------------------------------------------------------------
-
-simplemodeling-lib integrates with runtime systems
-via explicit extension points.
-
-Frameworks
-----------
-
-Cloud-Native Component Framework (CNCF) is the primary
-framework-level integrator of simplemodeling-lib.
-
-CNCF is responsible for:
-
-    - interpreting Conclusion and ErrorStrategy
-    - deciding retry, escalation, or abort behavior
-    - projecting Observation into logs, traces, and metrics
-    - providing execution and lifecycle semantics
-
-simplemodeling-lib itself remains framework-independent
-and never performs interpretation or execution.
-
-Applications
-------------
-
-Semantic Integration Engine (SIE) is **not a framework**.
-
-SIE is an application built **on top of CNCF** and therefore
-uses simplemodeling-lib **indirectly via CNCF**.
-
-In this structure:
-
-    simplemodeling-lib
-        ↓
-    CNCF (framework)
-        ↓
-    SIE (application)
-
-Applications built on CNCF rely on the guarantees provided by:
-
-    - simplemodeling-lib (semantic core)
-    - CNCF (interpretation and execution)
-
-but do not redefine or extend core semantics directly.
-
-----------------------------------------------------------------------
-Normative Integration Contract
-----------------------------------------------------------------------
-
-The integration contract between simplemodeling-lib
-and framework-level runtimes (such as CNCF)
-is defined in:
-
-    docs/spec/error-observation-integration.md
-
-This specification is normative for framework integration.
-
-Applications such as SIE MUST conform to this contract
-indirectly by using CNCF-provided mechanisms.
-
-----------------------------------------------------------------------
-Exploratory Design Notes
-----------------------------------------------------------------------
-
-Some aspects of the error / observation model
-are intentionally exploratory and usage-driven.
-
-Design context, historical experience,
-and empirical findings are preserved in:
-
-    docs/notes/error-model-exploration.md
-
-These notes are:
-
-    - non-normative
-    - evolving
-    - intended to preserve design memory
-
-----------------------------------------------------------------------
-Intended Use Cases
-----------------------------------------------------------------------
-
-    - Domain-driven design
-    - CML-based code generation
-    - Generated runtime execution
-    - Configuration loading and validation
-    - CLI and batch execution
-    - Cloud-native applications
-    - Observability and diagnostics
-    - AI-assisted analysis and tooling
-
-----------------------------------------------------------------------
-Non-Goals
-----------------------------------------------------------------------
-
-This library is not:
-
-    - a logging framework
-    - an observability backend
-    - a web / HTTP abstraction
-    - a retry or workflow engine
-    - a code generation tool itself
-
-It defines meaning, not mechanisms.
-
-----------------------------------------------------------------------
-Status
-----------------------------------------------------------------------
-
-This library is under active development.
-
-Semantic clarity and structural correctness
-are prioritized over short-term convenience.
-
-Once frameworks or generated runtimes depend on a concept,
-semantic changes are treated as extremely costly
-and must be carefully justified.
-
-----------------------------------------------------------------------
-Test Policy
-----------------------------------------------------------------------
-
-Tests in simplemodeling-lib are treated as **executable working specifications**.
-
-They are not written primarily to verify implementation correctness,
-but to capture and stabilize the intended semantic meaning of
-public domain primitives.
-
-Development Order
-
-Implementation is done first.
-Tests are written afterward to record properties and invariants
-once behavior becomes concrete.
-
-This project does not follow classic test-first TDD.
-
-Test Characteristics
-
-- Tests are unit-level only
-- Tests focus on public APIs and stable semantic properties
-- Private helpers and implementation details are not tested
-- Tests describe invariants, idempotence, and semantic stability
-- Tests act as long-lived documentation of intent
-
-Test Structure
-
-All tests are located under:
-
-    src/test
-
-Only unit and property-oriented tests are included in this module.
-Scenario, integration, or execution-level tests are intentionally excluded.
-
-Test Style and Tools
-
-- ScalaTest AnyWordSpec is used as the base style
-- Property-Based Testing (PBT) is the primary testing approach
-- ScalaCheck is used via ScalaCheckDrivenPropertyChecks
-
-Tests serve as a semantic safety net,
-protecting long-term meaning rather than short-term behavior.
+- The AI contract lives in ai/directive.
+- This project explicitly adopts that contract.
+- Documentation and code are interpreted under that shared understanding.

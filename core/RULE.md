@@ -1,3 +1,11 @@
+> Note on Authority and Local README
+>
+> This `RULE.md` may be accessed from the project root or from `ai/directive/core/`
+> via symbolic links. All such references point to the same authoritative rule set.
+>
+> `README.md` is a project-local document edited from a template and is not authoritative
+> for normative behavior. When guidance conflicts, `AGENT.md` and `RULE.md` take precedence.
+
 Naming Conventions (2025-12-26)
 ==================
 
@@ -6,6 +14,10 @@ This document defines the naming conventions used in the programs on this site.
 These conventions are introduced to improve the readability of example code.
 They are **not intended as general recommendations**, but as project‑specific rules
 to keep the codebase consistent and easy to read.
+
+## Scope Clarification
+
+`RULE.md` contains the normative code-level naming, lifecycle, and AI-change contracts. Process and progress semantics—such as Work A/B/C discipline and checklist status reporting—live in `work-process.md` and `phase-subphase-checklist.md`, which are the dedicated canon for stage and checklist governance referenced by agents.
 
 # Class Names
 

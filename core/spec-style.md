@@ -417,3 +417,5 @@ Front Matter is ignored by Markdown renderers and does not affect document seman
 This style intentionally differs from traditional BDD.
 While the structure is similar, the intent is semantic,
 not behavioral or execution-oriented.
+
+Lifecycle authority for the spec promotion path is defined in `document-lifecycle.md`, and checklist-driven completion semantics appear in `phase-subphase-checklist.md`. Referencing those canonical documents prevents introducing overlapping interpretations when asserting that a spec or stage has transitioned to DONE, CLOSED, or another lifecycle milestone.
