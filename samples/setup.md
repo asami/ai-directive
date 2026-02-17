@@ -5,7 +5,7 @@ $ git submodule add https://github.com/asami/ai-directive.git ai/directive
 ```
 
 ```
-$ ln -s ai/directive/core/AGENTS.md .
+$ ln -s ai/directive/core/AGENT.md .
 ```
 
 ```
