@@ -3048,6 +3048,15 @@ Update behavior:
    - Multiple history lines are allowed.
    - If multiple `@version` lines exist, keep only the latest as `@version`,
      convert others to history lines.
+   - Month compression:
+     - If history entries contain the same month/year as the latest `@version`,
+       those same-month history entries MUST be removed.
+     - Example:
+       - Before:
+           `*  version Mar. 20, 2026`
+           `* @version Mar. 24, 2026`
+       - After:
+           `* @version Mar. 24, 2026`
 5. Insert:
    - If no `@version` exists and `@since` exists, insert `@version` immediately after `@since`.
    - If neither exists, insert `@version` into the top header comment block.
@@ -3055,6 +3064,6 @@ Update behavior:
    - Do not modify code outside comments.
    - Preserve comment indentation and style.
    - Do not reorder existing history lines.
-   - Do not remove existing history entries.
+   - Do not remove existing history entries, except by the month-compression rule above.
 7. Git integration:
    - Re-stage files after comment updates.

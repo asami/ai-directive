@@ -64,6 +64,24 @@ After:
 - If multiple "@version" lines exist:
   - Keep only the latest as "@version"
   - Convert others into history entries
+- Month compression:
+  - If history contains entries in the same month/year as the latest "@version",
+    remove those same-month history entries.
+
+Example:
+
+Before:
+    * @since   Jan.  6, 2026
+    *  version Jan. 21, 2026
+    *  version Feb. 25, 2026
+    *  version Mar. 20, 2026
+    * @version Mar. 24, 2026
+
+After:
+    * @since   Jan.  6, 2026
+    *  version Jan. 21, 2026
+    *  version Feb. 25, 2026
+    * @version Mar. 24, 2026
 
 5. Insert
 - If "@version" does NOT exist:
@@ -77,7 +95,7 @@ After:
 - Preserve indentation and comment style (e.g., leading " * ")
 - `@version` line MUST be formatted as `* @version ...` (single space after `*`)
 - Do NOT reorder history lines
-- Do NOT remove existing history entries
+- Do NOT remove existing history entries, except by the month-compression rule above
 
 7. Date
 - Use the current system date
@@ -92,4 +110,3 @@ After:
 - Apply changes directly to files
 - Do not output explanations
 ```
-
