@@ -3008,3 +3008,53 @@ Violation of these rules leads to:
 - non-reproducible tests
 - brittle runtime behavior
 - loss of architectural clarity
+
+----------------------------------------------------------------------
+Scala Header Version Update Rules
+----------------------------------------------------------------------
+
+These rules define how to maintain `@version` history in Scala file header comments.
+
+Scope:
+- Applies to staged Scala files (`*.scala`) before commit.
+- Target files MUST be selected by:
+    `git diff --cached --name-only`
+- From the result, include only `*.scala` and exclude deleted files.
+
+Date format:
+- Use current system date with:
+    `%b. %e, %Y`
+- Example:
+    `Mar. 24, 2026`
+
+Target comment lines:
+- Current version line:
+    ` * @version <date>`
+- History line:
+    ` *  version <date>`
+
+Formatting rule:
+- `@version` line MUST use one space after `*`.
+- History `version` line MUST preserve the existing two-space style.
+
+Update behavior:
+1. Detect `@version` in the top header comment block.
+2. Replace latest `@version` with today's date.
+3. Preserve history:
+   - Replaced `@version` entries MUST be converted to history entries:
+       ` *  version <old-date>`
+4. Deduplicate:
+   - Exactly one `@version` line MUST remain.
+   - Multiple history lines are allowed.
+   - If multiple `@version` lines exist, keep only the latest as `@version`,
+     convert others to history lines.
+5. Insert:
+   - If no `@version` exists and `@since` exists, insert `@version` immediately after `@since`.
+   - If neither exists, insert `@version` into the top header comment block.
+6. Constraints:
+   - Do not modify code outside comments.
+   - Preserve comment indentation and style.
+   - Do not reorder existing history lines.
+   - Do not remove existing history entries.
+7. Git integration:
+   - Re-stage files after comment updates.
