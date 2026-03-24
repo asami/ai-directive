@@ -3067,3 +3067,32 @@ Update behavior:
    - Do not remove existing history entries, except by the month-compression rule above.
 7. Git integration:
    - Re-stage files after comment updates.
+
+----------------------------------------------------------------------
+Work Artifact Placement Rules
+----------------------------------------------------------------------
+
+These rules define where runtime/test work artifacts MUST be created.
+
+Scope:
+- Applies to temporary runtime files and local execution artifacts
+  (for example: sqlite/db files, generated local config files, scripted work outputs).
+
+Placement:
+- Work artifacts MUST be created under `target/` only.
+- Preferred layout:
+  - `target/<tool>/work/<context>/...`
+  - Example: `target/scripted/work/user-account/scripted-user-account.sqlite`
+- Runtime/config files used only for local verification SHOULD be created under:
+  - `target/<tool>/config/...`
+
+Prohibitions:
+- Do NOT create work artifacts at repository root.
+- Do NOT place local runtime artifacts under `src/`, `docs/`, or tracked production paths.
+
+Cleanup:
+- Scripts/tests SHOULD remove work artifacts after execution unless retention is explicitly requested.
+- Work artifact directories MUST remain safe to remove as a whole.
+
+Git:
+- Work artifacts are non-source outputs and MUST NOT be committed.
