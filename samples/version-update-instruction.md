@@ -64,9 +64,30 @@ After:
 - If multiple "@version" lines exist:
   - Keep only the latest as "@version"
   - Convert others into history entries
+- @since overlap cleanup:
+  - If a history line has the same date as "@since", remove that history line.
+  - Example:
+    Before:
+        * @since   Mar. 20, 2026
+        *  version Mar. 20, 2026
+        * @version Mar. 25, 2026
+    After:
+        * @since   Mar. 20, 2026
+        * @version Mar. 25, 2026
 - Month compression:
   - If history contains entries in the same month/year as the latest "@version",
     remove those same-month history entries.
+  - Exception:
+    - If the previous "@version" date is in the same month/year as "@since" but the day differs,
+      preserve that previous "@version" as a history entry.
+    - Example:
+      Before:
+          * @since   Mar. 21, 2026
+          * @version Mar. 23, 2026
+      After:
+          * @since   Mar. 21, 2026
+          *  version Mar. 23, 2026
+          * @version Apr.  2, 2026
 
 Example:
 
