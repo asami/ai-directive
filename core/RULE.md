@@ -17,7 +17,7 @@ to keep the codebase consistent and easy to read.
 
 ## Scope Clarification
 
-`RULE.md` contains the normative code-level naming, lifecycle, and AI-change contracts. Process and progress semantics—such as Work A/B/C discipline and checklist status reporting—live in `work-process.md` and `phase-subphase-checklist.md`, which are the dedicated canon for stage and checklist governance referenced by agents.
+`RULE.md` contains the normative code-level naming, lifecycle, and AI-change contracts. Process and progress semantics—such as Work A/B/C discipline and checklist status reporting—live in `work-process.md` and `phase-subphase-checklist.md`. Documentation-layer semantics and placement rules live in `document-lifecycle.md`. Together, these documents form the dedicated canon for work, checklist, and document governance referenced by agents.
 
 # Class Names
 
