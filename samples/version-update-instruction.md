@@ -43,19 +43,32 @@ Rules:
 - Replace the latest "@version" line with today's date
 
 3. History Preservation (IMPORTANT)
-- If an existing "@version" line is replaced:
-  - Convert the previous "@version" line into a history entry:
+- Keep exactly ONE "@version" line: the latest date.
+- For older "@version" lines:
+  - If the older date is in a different month/year from the latest "@version",
+    convert it into a history entry:
         *  version <old-date>
-  - Remove the "@" prefix but keep the date
+  - If the older date is in the same month/year as the latest "@version",
+    remove it (do not keep it as history).
 
-Example:
+Example A (different month):
 
 Before:
-    * @version Mar. 13, 2026
+    * @version Feb. 19, 2026
+    * @version Apr.  9, 2026
 
 After:
-    *  version Mar. 13, 2026
-    * @version Mar. 24, 2026
+    *  version Feb. 19, 2026
+    * @version Apr.  9, 2026
+
+Example B (same month):
+
+Before:
+    * @version Apr.  3, 2026
+    * @version Apr.  9, 2026
+
+After:
+    * @version Apr.  9, 2026
 
 4. Deduplication
 - Ensure:
@@ -117,6 +130,55 @@ After:
 - `@version` line MUST be formatted as `* @version ...` (single space after `*`)
 - Do NOT reorder history lines
 - Do NOT remove existing history entries, except by the month-compression rule above
+- Do NOT replace an existing `*  version ...` history line with the new `@version`
+- Do NOT delete an existing history line when updating `@version`, unless an explicit cleanup rule above applies
+
+Failure examples:
+
+Bad:
+    /*
+     * @since   Jan.  7, 2026
+     *  version Jan. 20, 2026
+     * @version Apr.  9, 2026
+     * @author  ASAMI, Tomoharu
+     */
+
+Reason:
+    - The previous `@version Feb. 19, 2026` was not preserved as `*  version Feb. 19, 2026`
+
+Good:
+    /*
+     * @since   Jan.  7, 2026
+     *  version Jan. 20, 2026
+     *  version Feb. 19, 2026
+     * @version Apr.  9, 2026
+     * @author  ASAMI, Tomoharu
+     */
+
+Bad:
+    /*
+     * @since   Jan.  1, 2026
+     *  version Apr.  6, 2026
+     * @version Apr.  9, 2026
+     *  version Mar. 30, 2026
+     *  version Jan. 22, 2026
+     *  version Feb. 17, 2026
+     * @author  ASAMI, Tomoharu
+     */
+
+Reason:
+    - Existing history lines were reordered
+    - `@version` must be the newest line, but older `version` lines must keep their original order
+
+Good:
+    /*
+     * @since   Jan.  1, 2026
+     *  version Jan. 22, 2026
+     *  version Feb. 17, 2026
+     *  version Mar. 30, 2026
+     * @version Apr.  9, 2026
+     * @author  ASAMI, Tomoharu
+     */
 
 7. Date
 - Use the current system date
