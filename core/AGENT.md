@@ -43,11 +43,26 @@
 ## Executable Specification Policy
 
 - `src/test/scala` stores Executable Specifications by default.
+- Tests should be written as Executable Specifications by default.
 - Avoid simple example-based unit tests.
 - Executable Specifications must:
   - use Given / When / Then structure
   - use Property-Based Testing (ScalaCheck) actively
   - read as behavior documentation
+
+## Structured Failure Policy
+
+- Treat `Consequence.failure("...")` as a last resort only.
+- Prefer structured failures using `Observation`, `Taxonomy`, `Cause`, `Conclusion`,
+  and typed `Consequence` utility methods.
+- New `Consequence` error utilities should use the error name itself, for example
+  `notImplemented(message)` or `securityPermissionDenied(message)`.
+- Do not add new `failXxx(...)` utility names. Existing `failXxx(...)` helpers are
+  legacy and should be migrated gradually when touched.
+- When an error category is missing, extend the Observation / Taxonomy vocabulary
+  and add suitable `Conclusion` / `Consequence` helpers instead of introducing
+  new string-only failures.
+- Existing string-only failures should be migrated incrementally when touched.
 
 
 ## Specification Categories (by Package)

@@ -1035,6 +1035,35 @@ def reserve(cmd: ReserveCommand): Consequence[Reservation]
 - Use `Consequence` for all domain-level errors.
 - Only throw exceptions for contract violations or unrecoverable errors.
 
+### Structured Failure Rule
+
+- `Consequence.failure("...")` is a last resort.
+- Known failure categories MUST be represented with structured errors:
+  - `Observation`
+  - `Taxonomy`
+  - `Cause`
+  - `Conclusion`
+  - typed `Consequence` utility methods
+- If an appropriate failure vocabulary does not exist, extend the Observation /
+  Taxonomy model and add suitable `Conclusion` / `Consequence` helpers.
+- Do not introduce new string-only failures when the failure category is known.
+- Existing string-only failures SHOULD be migrated incrementally when touched.
+
+### Consequence Error Utility Naming
+
+- New `Consequence` error utilities MUST use the error name itself as the method
+  name.
+- Preferred examples:
+  - `notImplemented(message)`
+  - `securityPermissionDenied(message)`
+  - `securityAuthenticationRequired(message)`
+- Do not introduce new `failXxx(...)` utility names.
+- Existing `failXxx(...)` utility methods are legacy compatibility surface and
+  SHOULD be migrated gradually when touched.
+- The utility method should create or delegate to a structured `Conclusion`
+  built from the appropriate `Observation`, `Taxonomy`, `Cause`, and descriptor
+  facets.
+
 ### Monadic vs Applicative Composition
 
 `Consequence` supports **both monadic and applicative-style composition**.
@@ -2862,6 +2891,7 @@ These two forms are treated as a **paired specification set**.
 
 ## Guidance
 
+- Tests SHOULD be written as Executable Specifications by default.
 - Prefer narrative-style ScalaTest specs (`AnyWordSpec`, `AnyFreeSpec`)
   for working specifications.
 - Test names SHOULD read as executable sentences describing behavior.
