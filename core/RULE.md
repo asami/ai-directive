@@ -1038,6 +1038,9 @@ def reserve(cmd: ReserveCommand): Consequence[Reservation]
 ### Structured Failure Rule
 
 - `Consequence.failure("...")` is a last resort.
+- `Consequence.fail(...)` is a low-level structured failure builder for cases
+  where no semantic utility exists yet and the caller must provide the
+  taxonomy, cause, and facets explicitly.
 - Known failure categories MUST be represented with structured errors:
   - `Observation`
   - `Taxonomy`
@@ -1048,6 +1051,8 @@ def reserve(cmd: ReserveCommand): Consequence[Reservation]
   Taxonomy model and add suitable `Conclusion` / `Consequence` helpers.
 - Do not introduce new string-only failures when the failure category is known.
 - Existing string-only failures SHOULD be migrated incrementally when touched.
+- If a low-level `Consequence.fail(...)` call becomes common or names a
+  recognizable failure category, add a semantic utility and migrate callers to it.
 
 ### Consequence Error Utility Naming
 
@@ -1058,8 +1063,8 @@ def reserve(cmd: ReserveCommand): Consequence[Reservation]
   - `securityPermissionDenied(message)`
   - `securityAuthenticationRequired(message)`
 - Do not introduce new `failXxx(...)` utility names.
-- Existing `failXxx(...)` utility methods are legacy compatibility surface and
-  SHOULD be migrated gradually when touched.
+- Existing `failXxx(...)` utility methods are deprecated legacy compatibility
+  surface and SHOULD be migrated gradually when touched.
 - The utility method should create or delegate to a structured `Conclusion`
   built from the appropriate `Observation`, `Taxonomy`, `Cause`, and descriptor
   facets.

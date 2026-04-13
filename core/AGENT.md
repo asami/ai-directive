@@ -53,15 +53,20 @@
 ## Structured Failure Policy
 
 - Treat `Consequence.failure("...")` as a last resort only.
+- Treat `Consequence.fail(...)` as the low-level structured failure builder for
+  application-side or library-side cases where a semantic utility does not exist
+  yet and the caller must provide taxonomy, cause, and facets explicitly.
 - Prefer structured failures using `Observation`, `Taxonomy`, `Cause`, `Conclusion`,
   and typed `Consequence` utility methods.
 - New `Consequence` error utilities should use the error name itself, for example
   `notImplemented(message)` or `securityPermissionDenied(message)`.
 - Do not add new `failXxx(...)` utility names. Existing `failXxx(...)` helpers are
-  legacy and should be migrated gradually when touched.
+  deprecated legacy aliases and should be migrated gradually when touched.
 - When an error category is missing, extend the Observation / Taxonomy vocabulary
   and add suitable `Conclusion` / `Consequence` helpers instead of introducing
   new string-only failures.
+- When a direct `Consequence.fail(...)` call becomes repeated or semantically
+  recognizable, add a named utility and migrate the call sites to that utility.
 - Existing string-only failures should be migrated incrementally when touched.
 
 
