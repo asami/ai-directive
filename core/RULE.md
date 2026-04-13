@@ -1056,15 +1056,16 @@ def reserve(cmd: ReserveCommand): Consequence[Reservation]
 
 ### Consequence Error Utility Naming
 
-- New `Consequence` error utilities MUST use the error name itself as the method
-  name.
+- New `Consequence` / `Conclusion` error utilities MUST use the error name
+  itself as the method name.
 - Preferred examples:
   - `notImplemented(message)`
   - `securityPermissionDenied(message)`
   - `securityAuthenticationRequired(message)`
 - Do not introduce new `failXxx(...)` utility names.
-- Existing `failXxx(...)` utility methods are deprecated legacy compatibility
-  surface and SHOULD be migrated gradually when touched.
+- Existing `Consequence.failXxx(...)` and `Conclusion.failXxx(...)` utility
+  methods are deprecated legacy compatibility surface and SHOULD be migrated
+  gradually when touched.
 - The utility method should create or delegate to a structured `Conclusion`
   built from the appropriate `Observation`, `Taxonomy`, `Cause`, and descriptor
   facets.
@@ -3051,10 +3052,9 @@ Scala Header Version Update Rules
 These rules define how to maintain `@version` history in Scala file header comments.
 
 Scope:
-- Applies to staged Scala files (`*.scala`) before commit.
-- Target files MUST be selected by:
-    `git diff --cached --name-only`
-- From the result, include only `*.scala` and exclude deleted files.
+- Applies to Scala files (`*.scala`) edited in the current task.
+- Apply this update as part of the file edit, not only at commit time.
+- Before committing, re-check all Scala files included in the commit and exclude deleted files.
 
 Date format:
 - Use current system date with:
@@ -3073,34 +3073,59 @@ Formatting rule:
 - History `version` line MUST preserve the existing two-space style.
 
 Update behavior:
-1. Detect `@version` in the top header comment block.
-2. Replace latest `@version` with today's date.
-3. Preserve history:
+1. Normalize to the canonical final shape.
+   - The final version block is authoritative even when the file was already broken
+     before the current edit.
+   - A valid final version block has:
+     1. `@since`, if present
+     2. preserved `*  version ...` history lines in original relative order,
+        after cleanup rules are applied
+     3. exactly one latest `* @version ...`
+     4. non-version metadata such as `@author`
+   - There must be no `*  version ...` line after the final `* @version ...`.
+   - There must be no multiple `* @version ...` lines.
+   - There must be no `*  version ...` line whose date is the same as `@since`.
+   - A `*  version ...` line in the same month/year as `@since` is valid when
+     the day differs from `@since`.
+   - There must be no `*  version ...` line in the same month/year as the final
+     latest `@version`.
+2. Detect `@version` in the top header comment block.
+3. Replace latest `@version` with today's date.
+4. Preserve history:
    - Replaced `@version` entries MUST be converted to history entries:
        ` *  version <old-date>`
-4. Deduplicate:
+5. Deduplicate:
    - Exactly one `@version` line MUST remain.
    - Multiple history lines are allowed.
    - If multiple `@version` lines exist, keep only the latest as `@version`,
      convert others to history lines.
    - Month compression:
-     - If history entries contain the same month/year as the latest `@version`,
+     - If history entries contain the same month/year as the final latest `@version`,
        those same-month history entries MUST be removed.
+     - This applies to both already-existing `*  version ...` history lines and
+       lines converted from older `* @version ...` entries.
+     - `@version` represents the latest edit in the month; same-month history
+       lines are compressed into that single `@version`.
+     - This compression applies to the latest `@version`, not to `@since`.
+       A same-month history line under `@since` is preserved when the day differs.
+     - If the `@since` same-month preservation rule and the final latest `@version`
+       same-month compression rule both match, the final latest `@version`
+       compression rule wins.
      - Example:
        - Before:
            `*  version Mar. 20, 2026`
            `* @version Mar. 24, 2026`
        - After:
            `* @version Mar. 24, 2026`
-5. Insert:
+6. Insert:
    - If no `@version` exists and `@since` exists, insert `@version` immediately after `@since`.
    - If neither exists, insert `@version` into the top header comment block.
-6. Constraints:
+7. Constraints:
    - Do not modify code outside comments.
    - Preserve comment indentation and style.
    - Do not reorder existing history lines.
    - Do not remove existing history entries, except by the month-compression rule above.
-7. Git integration:
+8. Git integration:
    - Re-stage files after comment updates.
 
 ----------------------------------------------------------------------

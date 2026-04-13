@@ -62,6 +62,8 @@
   `notImplemented(message)` or `securityPermissionDenied(message)`.
 - Do not add new `failXxx(...)` utility names. Existing `failXxx(...)` helpers are
   deprecated legacy aliases and should be migrated gradually when touched.
+- This applies to both `Consequence.failXxx(...)` and `Conclusion.failXxx(...)`
+  compatibility aliases.
 - When an error category is missing, extend the Observation / Taxonomy vocabulary
   and add suitable `Conclusion` / `Consequence` helpers instead of introducing
   new string-only failures.
