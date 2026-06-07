@@ -49,6 +49,9 @@ def purchaseOrder(cmd: PurchaseOrder): Consequence[PurchaseResult]
 
 - Start with a lowercase letter
 - Use snake_case
+- This is the default protected method rule. Override-oriented protected hooks
+  use the `xxx_Yyy` form described in
+  [Role Categories for Protected Methods](#role-categories-for-protected-methods).
 
 ### Example
 
@@ -1394,17 +1397,19 @@ protected def do_test(p: XXX): Result
 
 ### Naming Rule
 
-- Capitalize the following word to signal override intent
+- Use `xxx_Yyy` form.
+- Capitalize the following word to signal override intent.
 
 ### Example
 
 ```
 protected def do_Test(p: XXX): Result
+protected def build_Program: Program
 ```
 
 ### Design Notes
 
-- The camelCase form visually distinguishes hooks from subroutines
+- The `xxx_Yyy` form visually distinguishes hooks from protected subroutines
 - Subclasses are expected to override this method
 
 ---
