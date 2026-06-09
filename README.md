@@ -11,6 +11,27 @@ This repository is typically mounted into a project as a Git submodule at:
 
 and treated as an external, versioned contract.
 
+## Project Setup
+
+Use the setup guide when adopting this directive in a project:
+
+    ai/directive/samples/setup.md
+
+Minimal setup:
+
+```sh
+git submodule add https://github.com/asami/ai-directive.git ai/directive
+ln -s ai/directive/core/AGENT.md .
+ln -s ai/directive/core/RULE.md .
+```
+
+The `ai/directive` directory holds the shared directive. The project root
+`AGENT.md` and `RULE.md` should be symbolic links to the authoritative core
+documents so AI runtimes can find the rules from the project root.
+
+For project README and docs-layer README templates, follow
+`samples/setup.md`.
+
 ## Structure
 
 ```

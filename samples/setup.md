@@ -1,4 +1,17 @@
-# Basic Operation
+# AI Directive Project Setup
+
+This guide shows how to adopt `ai-directive` in a project.
+
+The required pieces are:
+
+- `ai/directive` as the shared directive repository.
+- `AGENT.md` as a symbolic link to `ai/directive/core/AGENT.md`.
+- `RULE.md` as a symbolic link to `ai/directive/core/RULE.md`.
+
+The README and docs-layer README files are optional templates for projects that
+want the standard documentation structure.
+
+## Required Setup
 
 ```
 $ git submodule add https://github.com/asami/ai-directive.git ai/directive
@@ -12,13 +25,13 @@ $ ln -s ai/directive/core/AGENT.md .
 $ ln -s ai/directive/core/RULE.md .
 ```
 
-# README.md
+## Optional Project README
 
 ```
 $ cp ai/directive/samples/README.md.sample ./README.md
 ```
 
-# docs layer READMEs
+## Optional Docs Layer READMEs
 
 ```
 $ mkdir -p docs/phase docs/journal docs/notes docs/design docs/spec
