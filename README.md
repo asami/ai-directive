@@ -32,6 +32,23 @@ documents so AI runtimes can find the rules from the project root.
 For project README and docs-layer README templates, follow
 `samples/setup.md`.
 
+## Updating the Directive
+
+`ai-directive` changes must be made in this repository, then consumed by
+projects by updating their `ai/directive` submodule pointer.
+
+Do not edit files under a consuming project's `ai/directive` submodule working
+tree as a way to update the directive. Such edits create project-local
+submodule dirtiness and do not update the authoritative contract.
+
+The normal flow is:
+
+1. Change this `ai-directive` repository.
+2. Commit and publish the directive update.
+3. Update each consuming project's `ai/directive` submodule pointer to the new
+   directive commit.
+4. Commit that pointer update in the consuming project.
+
 ## Structure
 
 ```

@@ -19,6 +19,54 @@ to keep the codebase consistent and easy to read.
 
 `RULE.md` contains the normative code-level naming, lifecycle, and AI-change contracts. Process and progress semantics—such as Work A/B/C discipline and checklist status reporting—live in `work-process.md` and `phase-subphase-checklist.md`. Documentation-layer semantics and placement rules live in `document-lifecycle.md`. Together, these documents form the dedicated canon for work, checklist, and document governance referenced by agents.
 
+# Release and Local Publish Safety
+
+Published release versions MUST NOT be overwritten by local publish operations.
+
+- Do NOT run `publishLocal`, `publishM2`, or equivalent local-publication tasks for
+  a non-SNAPSHOT version.
+- Do NOT locally publish an artifact using the same coordinate as an already
+  published release version, even for temporary validation.
+- Development changes that need local publication MUST use a SNAPSHOT or otherwise
+  clearly development-only version.
+- If a project is currently on a release version and local validation requires a
+  published artifact, first change the development coordinate to a SNAPSHOT
+  version or use a project/dev-dir launcher path that does not overwrite release
+  coordinates.
+- If a published artifact needs a fix before the next release, do not reuse the
+  published release coordinate. Bump the development coordinate to a strictly
+  higher `-SNAPSHOT` version and make downstream projects depend on that
+  SNAPSHOT until the next release is cut.
+- The replacement SNAPSHOT must be distinguishable from both the published
+  release and any already-consumed local SNAPSHOT. Prefer incrementing the next
+  patch or minor version, for example `0.1.3` to `0.1.4-SNAPSHOT`.
+
+Rationale:
+- Local publication of release coordinates makes the local machine disagree with
+  public repositories.
+- It can hide release reproducibility problems and contaminate later builds.
+- Tools such as Ivy and Coursier may cache release artifacts aggressively, making
+  overwritten local releases unreliable and difficult to reason about.
+
+# AI Directive Submodule Operation
+
+`ai-directive` is an external, versioned contract when mounted in a consuming
+project as `ai/directive`.
+
+- Do NOT edit files under a consuming project's `ai/directive` submodule working
+  tree to change shared directive behavior.
+- Shared directive changes MUST be made in the standalone `ai-directive`
+  repository first.
+- Consuming projects MUST receive directive changes by updating the
+  `ai/directive` submodule pointer to a committed directive revision.
+- If local validation needs a directive change before publication, use an
+  explicitly coordinated branch or commit of the standalone `ai-directive`
+  repository, then update the consuming project's submodule pointer. Do not leave
+  uncommitted directive edits inside the consuming project.
+- Project-specific rules may be added outside `ai/directive`, but they MUST NOT
+  mutate or contradict the shared directive unless an explicit exception is
+  documented.
+
 # Class Names
 
 - Start with an uppercase letter
