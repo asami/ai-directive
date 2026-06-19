@@ -27,6 +27,12 @@ Published release versions MUST NOT be overwritten by local publish operations.
   a non-SNAPSHOT version.
 - Do NOT locally publish an artifact using the same coordinate as an already
   published release version, even for temporary validation.
+- Published release artifacts MUST be validated through the normal repository
+  resolution path into the dependency cache. Do not validate a release by
+  placing the same coordinate in `.ivy2/local`, local Maven, or another
+  local-publication repository.
+- If a release coordinate was accidentally installed locally, remove that local
+  publication before testing downstream dependency resolution.
 - Development changes that need local publication MUST use a SNAPSHOT or otherwise
   clearly development-only version.
 - If a project is currently on a release version and local validation requires a
@@ -47,6 +53,8 @@ Rationale:
 - It can hide release reproducibility problems and contaminate later builds.
 - Tools such as Ivy and Coursier may cache release artifacts aggressively, making
   overwritten local releases unreliable and difficult to reason about.
+- Local publication of a release coordinate bypasses the repository-to-cache
+  route that downstream projects must actually use.
 
 # AI Directive Submodule Operation
 
