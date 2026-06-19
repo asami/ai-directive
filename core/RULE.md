@@ -2954,6 +2954,15 @@ These two forms are treated as a **paired specification set**.
 - Prefer narrative-style ScalaTest specs (`AnyWordSpec`, `AnyFreeSpec`)
   for working specifications.
 - Test names SHOULD read as executable sentences describing behavior.
+- Modified behavior specs SHOULD use `should` / `which` / `in` grouping when
+  they cover multiple feature areas, command groups, or lifecycle phases.
+- `Given` / `When` / `Then` SHOULD be placed at the actual setup / action /
+  expectation boundaries, not emitted as a consecutive prose block detached
+  from the code it describes.
+- Executable Specifications SHOULD use `should` matchers or reusable
+  specification vocabulary instead of raw `assert`.
+- Generic reusable specification vocabulary SHOULD live in shared libraries
+  rather than project-local helper traits.
 - Working specifications MAY include documentary tests
   that exist only to express design constraints.
 

@@ -48,6 +48,116 @@ This combination provides:
 
 ---
 
+# EXECUTABLE SPECIFICATION REVIEW RULES
+
+Executable Specifications MUST be reviewed as documents, not only as tests.
+
+A specification is acceptable only when a reader can understand the behavior
+contract from the ScalaTest structure and output without reverse-engineering
+the implementation.
+
+## REQUIRED REVIEW POINTS
+
+- Use `AnyWordSpec` by default.
+- Use `should` / `which` / `in` to expose behavior structure.
+- Use `which` for large specifications that contain multiple feature areas,
+  operation families, command groups, or lifecycle phases.
+- Use `GivenWhenThen` at the actual scenario boundaries.
+- Use `should` matchers or reusable specification vocabulary instead of bare
+  `assert`.
+- Keep one semantic contract per `in` block.
+- Make test names and `given` / `when` / `then` sentences read as specification
+  prose.
+
+## GIVEN / WHEN / THEN PLACEMENT
+
+`Given`, `When`, `Then`, and `And` MUST be distributed where the corresponding
+work happens:
+
+- `Given` appears with setup, fixtures, preconditions, and model definitions.
+- `When` appears immediately before or with the action being specified.
+- `Then` appears immediately before expectations.
+- `And` extends the current clause with related setup or expectations.
+
+Consecutive `Given` / `When` / `Then` lines at the beginning of a test are an
+anti-pattern unless the code that follows is purely mechanical and cannot be
+placed next to the clause it describes.
+
+## ASSERTION VOCABULARY
+
+Executable Specifications SHOULD avoid raw Boolean assertions.
+
+Prefer:
+
+- ScalaTest `should` matchers.
+- Domain-specific specification vocabulary.
+- Reusable path, collection, JSON, and metadata matchers.
+
+Generic vocabulary that is useful across projects SHOULD live in shared
+libraries:
+
+- Scala 2 compatible vocabulary belongs in `goldenport-scala-library`.
+- Scala 3 compatible vocabulary belongs in `simplemodeling-lib`.
+
+Project-specific vocabulary MAY live in the project test tree when the words
+only make sense for that project.
+
+## LARGE SPEC ORGANIZATION
+
+Large specifications SHOULD use this shallow hierarchy:
+
+```scala
+"Feature area" should {
+  "operation family" which {
+    "specific behavior" in {
+      Given("...")
+      ...
+      When("...")
+      ...
+      Then("...")
+      ...
+    }
+  }
+}
+```
+
+Use `which` to create navigable subsections when a single spec covers several
+operation families. Do not use a flat list of `test(...)` cases for behavior
+specifications that need to explain a command surface, lifecycle, or workflow.
+
+## ANTI-PATTERNS
+
+The following patterns SHOULD be rejected during review:
+
+- A modified behavior spec remains a flat `AnyFunSuite` test list.
+- Test cases use bare `assert` where a `should` matcher or vocabulary term
+  would express the expectation.
+- `Given` / `When` / `Then` are emitted as a consecutive prose block rather
+  than placed at setup / action / expectation boundaries.
+- A large spec has no `which` or equivalent grouping, making the output hard to
+  navigate.
+- Test names describe implementation steps instead of public behavior.
+- Generic helper words are copied into project-local traits instead of shared
+  vocabulary libraries.
+
+## OBSERVED FAILURE MODE
+
+`CozyBokSpec` failed to read as an Executable Specification because it originally
+combined several problems:
+
+- A large command and workflow surface was represented as flat test cases.
+- Assertions were expressed with raw `assert`, hiding the intended vocabulary.
+- Scenario descriptions were not distributed across setup, action, and
+  expectations.
+- The spec lacked `which` grouping for source scaffolding, site build,
+  publication, and command-surface behavior.
+
+This failure mode is now part of the review contract: when a test file is
+created or modified, reviewers MUST check whether it became an executable
+document or merely executable code.
+
+---
+
 # SPEC AS TABLE OF CONTENTS
 
 In SimpleModeling, specification files serve as **specification chapters**, organizing the semantic interpretation domain into a structured, living document.

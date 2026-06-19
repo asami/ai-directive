@@ -47,6 +47,9 @@
 - Avoid simple example-based unit tests.
 - Executable Specifications must:
   - use Given / When / Then structure
+  - place Given / When / Then at the setup / action / expectation boundaries
+  - use `should` matchers or reusable specification vocabulary instead of bare `assert`
+  - use `should` / `which` / `in` grouping for large behavior surfaces
   - use Property-Based Testing (ScalaCheck) actively
   - read as behavior documentation
 
