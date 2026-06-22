@@ -139,6 +139,9 @@ The following patterns SHOULD be rejected during review:
 - Test names describe implementation steps instead of public behavior.
 - Generic helper words are copied into project-local traits instead of shared
   vocabulary libraries.
+- New spec fixture helpers use ordinary Scala lowerCamel private names instead
+  of `_snake_case`, showing that implementation naming rules were not applied
+  while authoring the Executable Specification.
 
 ## OBSERVED FAILURE MODE
 

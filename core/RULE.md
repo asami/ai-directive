@@ -75,6 +75,29 @@ project as `ai/directive`.
   mutate or contradict the shared directive unless an explicit exception is
   documented.
 
+# Naming Authoring Discipline
+
+Naming rules MUST be applied while code is being written. They are not a
+post-implementation lint checklist. Agents and contributors MUST NOT create new
+Scala code using ordinary Scala lowerCamel conventions for private helpers,
+parameters, local variables, or internal private model fields and then defer
+cleanup to review.
+
+Before introducing a new Scala identifier, first decide its scope:
+
+- public API or required override -> `camelCase` where the public API requires it;
+- protected member -> snake_case without leading underscore unless an override
+  role rule says otherwise;
+- private member method/value, including spec fixture helpers -> `_snake_case`;
+- method-local helper -> `_snake_case_`;
+- method parameter or ordinary local variable -> flatcase;
+- private/internal case class field -> flatcase unless it is a serialized/public
+  schema field, Java/Scala API compatibility field, or required override.
+
+Review finding a naming violation in newly created code indicates that the
+authoring process was not followed. Moving the same check to `sbt` does not fix
+the problem; the correction point is identifier creation.
+
 # Class Names
 
 - Start with an uppercase letter

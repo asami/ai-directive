@@ -53,6 +53,27 @@
   - use Property-Based Testing (ScalaCheck) actively
   - read as behavior documentation
 
+## Implementation-Time Naming Gate
+
+Agents MUST apply `RULE.md` naming while creating Scala source and specs, not
+after review. Do not draft new code using ordinary Scala lowerCamel names and
+then rely on review, `sbt`, or release checks to find violations. Before adding
+a method, value, helper, parameter, local variable, private case class field, or
+spec fixture helper, determine its visibility/scope and choose the rule-compliant
+name immediately.
+
+Common authoring rules that MUST be applied up front:
+
+- public API and required overrides: `camelCase`;
+- private member methods/values, including spec helpers: `_snake_case`;
+- method-local helper functions: `_snake_case_`;
+- method parameters and ordinary local variables: flatcase;
+- internal private model fields: flatcase unless they are serialized/public
+  schema fields or required overrides.
+
+This is an authoring requirement, not a cleanup checklist. A naming issue found
+by review in newly created code should be treated as a process failure.
+
 ## Structured Failure Policy
 
 - Treat `Consequence.failure("...")` as a last resort only.
