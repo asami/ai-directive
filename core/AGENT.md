@@ -184,6 +184,20 @@ which document governs a given question or decision.
 
 ---
 
+### SmartDox Authoring Rules
+
+- **smartdox-authoring.md**
+  The mandatory authoring rules for public-facing SmartDox `.dox` documents and generated Dox scaffolds.
+
+  Governs:
+  - Dox metadata subsection spacing
+  - SmartDox-vs-Markdown authoring differences
+  - parser/API source-of-truth requirements for Dox metadata
+
+  Read this before editing or generating `.dox` files.
+
+---
+
 ### Normative Rules (Code-Level Contracts)
 
 - **RULE.md**  
