@@ -63,11 +63,15 @@ Rules:
   apply an incremental edit when the existing header is already malformed.
 
 1. Detection
-- Parse the complete header comment block, not a fixed number of lines.
-- The header comment block is the first `/* ... */` comment near the top of the file.
-- Read from `/*` through the matching `*/`, even when long imports or package declarations make the first N lines insufficient.
-- Look for "@since", "version", and "@version" lines only inside that header comment block.
-- Do not insert or move version lines outside the header comment block.
+- Do not decide that a Scala file has no version header by inspecting only the file beginning.
+- Scala/Java Scaladoc/Javadoc version comments commonly appear immediately before the target `class`, `object`, `trait`, `interface`, or `enum`, after `package` and `import` declarations.
+- Before updating or committing, search the complete changed file for version markers:
+      rg -n '@since|@version|@author|^[[:space:]]*\*[[:space:]]+version' <file>
+- Parse the complete comment block that contains the relevant `@since`, `version`, `@version`, or `@author` lines, not a fixed number of lines.
+- Read from that block's `/*` through the matching `*/`, even when long package/import sections make the first N lines insufficient.
+- Look for "@since", "version", and "@version" lines only inside that comment block.
+- Do not insert or move version lines outside the detected comment block.
+- If no version marker exists anywhere in the file, preserve the repository's convention; do not invent a new header unless the repository rule explicitly requires one.
 
 2. Update (Latest Version)
 - Replace the latest "@version" line with today's date

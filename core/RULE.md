@@ -3182,7 +3182,15 @@ Update behavior:
      the day differs from `@since`.
    - There must be no `*  version ...` line in the same month/year as the final
      latest `@version`.
-2. Detect `@version` in the top header comment block.
+2. Detect `@version` by searching the complete changed file, not only the file beginning.
+   - Scala/Java Scaladoc/Javadoc version comments commonly appear immediately before
+     the target `class`, `object`, `trait`, `interface`, or `enum`, after `package`
+     and `import` declarations.
+   - Use a full-file marker search such as:
+       `rg -n '@since|@version|@author|^[[:space:]]*\*[[:space:]]+version' <file>`
+   - Parse the complete comment block that contains the relevant version markers.
+   - If no version marker exists anywhere in the file, preserve the repository's
+     convention; do not invent a new header unless the repository rule explicitly requires one.
 3. Replace latest `@version` with today's date.
 4. Preserve history:
    - Replaced `@version` entries MUST be converted to history entries:
