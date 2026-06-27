@@ -21,10 +21,15 @@ to keep the codebase consistent and easy to read.
 
 # Release and Local Publish Safety
 
-Published release versions MUST NOT be overwritten by local publish operations.
+Published release versions are immutable.
 
-- Do NOT run `publishLocal`, `publishM2`, or equivalent local-publication tasks for
-  a non-SNAPSHOT version.
+- Do NOT modify source, commit changes, or run `publishLocal`, `publishM2`, or
+  equivalent local-publication tasks while the project is on a published release
+  coordinate such as `version := "x.y.z"`.
+- Before fixing code for a published artifact, bump the project to the next
+  development coordinate, such as `x.y.(z+1)-SNAPSHOT`, in the same change set.
+- A fix commit under the original release coordinate is forbidden, even when the
+  release artifact is not locally published.
 - Do NOT locally publish an artifact using the same coordinate as an already
   published release version, even for temporary validation.
 - Published release artifacts MUST be validated through the normal repository
