@@ -74,7 +74,7 @@ Rules:
 - If no version marker exists anywhere in the file, preserve the repository's convention; do not invent a new header unless the repository rule explicitly requires one.
 
 2. Update (Latest Version)
-- Replace the latest "@version" line with today's date
+- Replace the latest "@version" line with the target Scala file's actual source-update date
 
 3. History Preservation (IMPORTANT)
 - Keep exactly ONE "@version" line: the latest date.
@@ -268,7 +268,10 @@ Good:
      */
 
 7. Date
-- Use the current system date
+- Use the target Scala file's actual source-update/history date, not the workflow execution date or commit date.
+- Determine the source-update date from the current task context, edit history, file-specific change history, or other reliable evidence.
+- If the file was edited on multiple dates in the current change set, use the latest actual source-update date for that file.
+- If the source-update date cannot be determined reliably, use the current system date as a fallback and treat that fallback as explicit uncertainty, not the normal rule.
 - Format must match:
     %b. %e, %Y
 
