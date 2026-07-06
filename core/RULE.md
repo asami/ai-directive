@@ -3034,6 +3034,7 @@ Context Usage Rules
 - Core code MUST NOT directly access:
   - system time (e.g. Instant.now, LocalDate.now)
   - default locale or timezone
+  - ad hoc date, time, number, or currency formatters
   - default encoding
   - random number generators
   - math precision defaults
@@ -3042,7 +3043,7 @@ Context Usage Rules
   - locale
   - timezone
   - encoding
-  - datetime format
+  - date, time, datetime, number, and currency formatting policy
   - clock / time source
   - math context
   - random sequence
@@ -3050,6 +3051,37 @@ Context Usage Rules
 - ExecutionContext MUST be immutable and explicitly injected.
 
 - ExecutionContext MUST be test-constructible without CNCF.
+
+----------------------------------------------------------------------
+CNCF Formatting Rules
+----------------------------------------------------------------------
+
+CNCF components MUST use the runtime formatting context for
+locale-sensitive behavior.
+
+- Component logic MUST read locale, timezone, and formatting policy from:
+    ExecutionContext.runtime.context.formatting
+
+- Component logic MUST NOT directly use:
+  - Locale.getDefault
+  - ZoneId.systemDefault
+  - JVM-default date/time formatters
+  - JVM-default number or currency formatters
+
+- Operation inputs for locale, timezone, and formatting SHOULD be optional
+  unless the domain contract explicitly requires the caller to choose them.
+
+- When a domain entity needs a durable timezone or regional interpretation,
+  the component SHOULD resolve the omitted value from the runtime formatting
+  context at creation time and persist the resolved value.
+
+- Date/time and numeric parsing or rendering SHOULD use CNCF formatting
+  helpers or helpers derived from the runtime formatting context, not
+  project-local hard-coded formatter policy.
+
+- Tests for date/time or numeric behavior SHOULD build an ExecutionContext
+  with explicit locale, timezone, and formatting policy when the result would
+  otherwise depend on the developer machine or CI host.
 
 ----------------------------------------------------------------------
 Logging Rules
@@ -3142,6 +3174,76 @@ Violation of these rules leads to:
 - non-reproducible tests
 - brittle runtime behavior
 - loss of architectural clarity
+
+----------------------------------------------------------------------
+CNCF CAR Web UI Recommendation
+----------------------------------------------------------------------
+
+When a CAR includes a built-in Web UI and the project has no stronger
+product-specific frontend requirement, use Bootstrap plus Material Design.
+
+This is a strong recommendation, not a mandatory platform rule. The
+combination is already established across `textus-*` components and integrates
+well with CNCF Web packaging, generated admin surfaces, and automatic REST.
+
+Recommended built-in CAR UI approach:
+- Declare the CNCF Web UX profile as `bootstrap-material` when the CAR uses
+  CNCF-hosted built-in Web UI:
+
+      web:
+        profile: bootstrap-material
+
+- Use Bootstrap layout, forms, buttons, tables, cards, and utility classes.
+- Use Material Icons or an equivalent Material icon set.
+- Use Material Design visual language for spacing, color, controls, and
+  status presentation.
+- Package Web assets inside the CAR and serve them through CNCF Web packaging.
+- Do not make external CDN access a requirement for the built-in UI.
+- Keep Web UI behavior on top of component operations, automatic REST, and
+  generated admin behavior; do not create a separate UI-only domain path.
+
+If a project needs a highly custom UI stack, SPA framework, native frontend,
+or product platform outside this recommendation, prefer placing that Web tier
+outside CNCF. The external Web tier should use CNCF automatic REST, client, or
+command surfaces while the CAR remains responsible for domain behavior and
+persistence.
+
+----------------------------------------------------------------------
+CNCF HTTP Driver and Internal DSL Rules
+----------------------------------------------------------------------
+
+CNCF component code MUST use the CNCF internal DSL for outbound HTTP access.
+
+- Component code MUST NOT directly use:
+  - java.net.http.HttpClient
+  - curl-style process execution
+  - project-local ad hoc HTTP clients
+
+- Component code SHOULD use the internal DSL, such as:
+  - http_get
+  - http_post
+  - UnitOfWorkOp.HttpGet
+  - UnitOfWorkOp.HttpPost
+
+- HTTP driver selection, configuration, execution policy, timeout behavior,
+  observability, and test substitution are CNCF runtime responsibilities.
+
+The internal DSL is required so that outbound HTTP access can participate in:
+- CNCF observability and calltree tracking
+- runtime security and capability checks
+- outbound destination allow/deny policy
+- audit, metrics, retry, and timeout policy
+- deterministic fake or fixture drivers in tests
+
+Component-level providers and parsers SHOULD focus on interpreting HTTP
+responses and mapping failures to domain results. They SHOULD NOT decide how
+HTTP is executed.
+
+Recommended error mapping:
+- transport, timeout, or driver failure: network_error
+- non-2xx or unusable source response: source_error
+- fetched content that the parser cannot interpret: parse_error
+- no registered parser for the target source: unsupported_fetch
 
 ----------------------------------------------------------------------
 Scala Header Version Update Rules
