@@ -80,6 +80,25 @@ project as `ai/directive`.
   mutate or contradict the shared directive unless an explicit exception is
   documented.
 
+## Repository-Local Rule Location
+
+Adopting repositories MUST expose the shared directive through root symlinks:
+
+```text
+AGENT.md  -> ai/directive/core/AGENT.md
+AGENTS.md -> ai/directive/core/AGENT.md
+RULE.md   -> ai/directive/core/RULE.md
+```
+
+Repository-specific normative rules MUST be placed in
+`docs/rules/repository-rules.md`. Repository-specific agent reading guidance
+MUST be placed in `docs/ai/repository-agent-guide.md`.
+
+Do not maintain copied or independently edited root `AGENT.md`, `AGENTS.md`, or
+`RULE.md` files. A repository-specific rule may add detail to the shared
+contract but must not silently contradict it. A required exception must be
+declared explicitly in `docs/rules/shared-directive-exceptions.md`.
+
 # Naming Authoring Discipline
 
 Naming rules MUST be applied while code is being written. They are not a

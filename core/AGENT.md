@@ -8,8 +8,9 @@
 
 > Note on Symlinks and Local README
 >
-> This project exposes `AGENT.md` and `RULE.md` at the project root via symbolic links
-> to shared authoritative documents under `ai/directive/core/`.
+> Adopting projects expose `AGENT.md`, `AGENTS.md`, and `RULE.md` at the
+> project root via symbolic links to shared authoritative documents under
+> `ai/directive/core/`.
 >
 > These are not separate documents. They are the same canonical content,
 > shared across adopting projects. File location never implies authority.
@@ -18,26 +19,44 @@
 > and edited for human-oriented overview. If `README.md` appears to conflict with
 > `AGENT.md` or `RULE.md`, the symlinked core documents take precedence.
 
+## Repository-Local Extensions
+
+Root directive files MUST remain shared symlinks. Repository-specific
+information belongs in these conventional files:
+
+- `docs/rules/repository-rules.md`
+  - normative repository-specific rules and architecture boundaries;
+  - may add detail to the shared rules;
+  - must not silently contradict the shared rules.
+- `docs/ai/repository-agent-guide.md`
+  - repository reading order, canonical documents, package-specific guidance,
+    and operational notes for agents;
+  - is guidance and must not override rules, specs, or design.
+- `docs/rules/shared-directive-exceptions.md`
+  - explicit, reviewed exceptions to shared rules;
+  - use only when a real repository contract requires an exception.
+
+When present, agents MUST read the repository-local rule and guide before
+editing. The authority order is:
+
+1. shared `RULE.md`;
+2. `docs/rules/repository-rules.md`;
+3. explicit exceptions in `docs/rules/shared-directive-exceptions.md`;
+4. specs and design for the affected subsystem;
+5. non-normative agent guidance and notes.
+
 ## How to Read This Repository (for Agents)
 
-1. `AGENTS.md` (this file)
-2. `RULE.md` (top-level rules for code, API, and AI behavior)
-3. `README.md` (human-oriented overview and entry point)
-4. `docs/rules/` (documentation rules and policies; see document-boundary.md first)
-5. `docs/spec/` (static specifications)
-6. `docs/design/` (design intent and boundaries; start with `docs/design/protocol-core.md`)
-7. `src/main/scala/` (implementation)
-8. `src/test/scala/` (Executable Specifications)
-
-## Canonical Design Documents
-
-- `docs/design/protocol-core.md`  
-  Primary design entry for protocol boundaries and invariants.  
-  MUST be read before modifying protocol-related code.
-
-- `docs/design/protocol-introspection.md`  
-  Projection / introspection design for CLI help, REST OpenAPI, MCP get_manifest.  
-  Read this when working on projection generation.
+1. `AGENTS.md` or `AGENT.md` (this shared entry point)
+2. `RULE.md` (shared code, API, and AI behavior rules)
+3. `docs/rules/repository-rules.md`, when present
+4. `docs/ai/repository-agent-guide.md`, when present
+5. `README.md` (human-oriented overview and entry point)
+6. remaining documents under `docs/rules/`
+7. `docs/spec/`
+8. `docs/design/`
+9. `src/main/scala/`
+10. `src/test/scala/`
 
 
 ## Executable Specification Policy
