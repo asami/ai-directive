@@ -91,11 +91,13 @@ cleanup to review.
 Before introducing a new Scala identifier, first decide its scope:
 
 - public API or required override -> `camelCase` where the public API requires it;
+- public/protected method parameter -> `camelCase`; Scala named-argument labels
+  make these parameter names part of the source API;
 - protected member -> snake_case without leading underscore unless an override
   role rule says otherwise;
 - private member method/value, including spec fixture helpers -> `_snake_case`;
 - method-local helper -> `_snake_case_`;
-- method parameter or ordinary local variable -> flatcase;
+- private method parameter or ordinary local variable -> flatcase;
 - private/internal case class field -> flatcase unless it is a serialized/public
   schema field, Java/Scala API compatibility field, or required override.
 
@@ -263,14 +265,53 @@ private val _reservation_count: Int
 
 ## Method Parameters
 
-- Start with a lowercase letter
-- Use flatcase (all lowercase, no separators)
+Method parameter naming follows method visibility because Scala exposes
+parameter names as named-argument labels and therefore as source API.
+
+### Public and Protected Method Parameters
+
+- Start with a lowercase letter.
+- Use camelCase.
+- Preserve the parameter names required by an overridden parent API.
 
 ### Example
 
 ```
-def x(reservationcount: Int)
+protected def authorizeAggregate(
+  aggregateName: String,
+  targetId: EntityId
+): Result
 ```
+
+### Private Method Parameters
+
+- Start with a lowercase letter.
+- Use flatcase (all lowercase, no separators).
+
+### Example
+
+```
+private def _authorize_aggregate(
+  aggregatename: String,
+  targetid: EntityId
+): Result
+```
+
+### Named Arguments and Migration
+
+- A named-argument label MUST use the parameter name declared by the callee.
+- Calls to an external or public/protected camelCase API keep camelCase labels
+  even when the local value is flatcase, for example
+  `aggregateName = aggregatename`.
+- Calls to a private flatcase API use flatcase labels.
+- A deprecated label, compatibility overload, forwarding alias, or
+  `@deprecatedName` annotation does not make a nonconforming canonical
+  public/protected parameter name compliant.
+- When this rule is applied to an existing public/protected flatcase
+  parameter, rename the canonical parameter and update named-argument call
+  sites. Keep a compatibility label only when an explicit source-compatibility
+  contract requires it; do not introduce one merely to avoid completing the
+  naming migration.
 
 ## Method‑Local Variables
 

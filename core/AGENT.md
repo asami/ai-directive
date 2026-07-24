@@ -65,11 +65,19 @@ name immediately.
 Common authoring rules that MUST be applied up front:
 
 - public API and required overrides: `camelCase`;
+- public and protected method parameters: `camelCase`, because parameter names
+  are source API through Scala named arguments;
 - private member methods/values, including spec helpers: `_snake_case`;
 - method-local helper functions: `_snake_case_`;
-- method parameters and ordinary local variables: flatcase;
+- private method parameters and ordinary local variables: flatcase;
 - internal private model fields: flatcase unless they are serialized/public
   schema fields or required overrides.
+
+Named-argument labels MUST follow the callee declaration. A deprecated label,
+compatibility alias, or `@deprecatedName` annotation does not make a
+nonconforming canonical public/protected parameter name compliant. Rename the
+canonical parameter and its call sites when applying this rule; retain a
+compatibility label only when an explicit compatibility contract requires it.
 
 This is an authoring requirement, not a cleanup checklist. A naming issue found
 by review in newly created code should be treated as a process failure.
