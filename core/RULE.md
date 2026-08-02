@@ -109,12 +109,17 @@ cleanup to review.
 
 Before introducing a new Scala identifier, first decide its scope:
 
+- class, case class, trait, enum, object, case object, or type alias,
+  regardless of visibility -> `UpperCamelCase` without a leading or trailing
+  underscore;
 - public API or required override -> `camelCase` where the public API requires it;
 - public/protected method parameter -> `camelCase`; Scala named-argument labels
   make these parameter names part of the source API;
 - protected member -> snake_case without leading underscore unless an override
   role rule says otherwise;
-- private member method/value, including spec fixture helpers -> `_snake_case`;
+- private member method/value (`def`, `val`, `var`, or `lazy val`), including
+  spec fixture helpers -> `_snake_case`; this rule does not apply to `object`
+  declarations;
 - method-local helper -> `_snake_case_`;
 - private method parameter or ordinary local variable -> flatcase;
 - private/internal case class field -> flatcase unless it is a serialized/public
@@ -124,10 +129,34 @@ Review finding a naming violation in newly created code indicates that the
 authoring process was not followed. Moving the same check to `sbt` does not fix
 the problem; the correction point is identifier creation.
 
-# Class Names
+# Type and Structural Declaration Names
 
-- Start with an uppercase letter
-- Use CamelCase
+- Classes, case classes, traits, enums, objects, case objects, and type aliases
+  MUST start with an uppercase letter and use `UpperCamelCase`.
+- This rule applies equally to public, protected, package-private, and private
+  declarations, including nested declarations.
+- These declaration names MUST NOT have a leading or trailing underscore.
+- A companion object MUST use exactly the same name as its companion class.
+- The private `_snake_case` rule applies only to term members declared with
+  `def`, `val`, `var`, or `lazy val`; it MUST NOT be applied to an `object`
+  merely because a Scala object is also a stable value.
+
+Valid:
+
+```scala
+private class ImportSource
+private object ImportSource
+private val _import_source: ImportSource
+private def _resolve_import_source(): ImportSource
+```
+
+Invalid:
+
+```scala
+private class _ImportSource
+private object _ImportSource
+private object _import_source
+```
 
 ### Example
 

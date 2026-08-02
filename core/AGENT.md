@@ -77,16 +77,22 @@ editing. The authority order is:
 Agents MUST apply `RULE.md` naming while creating Scala source and specs, not
 after review. Do not draft new code using ordinary Scala lowerCamel names and
 then rely on review, `sbt`, or release checks to find violations. Before adding
-a method, value, helper, parameter, local variable, private case class field, or
-spec fixture helper, determine its visibility/scope and choose the rule-compliant
-name immediately.
+a class, trait, enum, object, type alias, method, value, helper, parameter,
+local variable, private case class field, or spec fixture helper, determine its
+declaration category and visibility/scope and choose the rule-compliant name
+immediately.
 
 Common authoring rules that MUST be applied up front:
 
+- classes, case classes, traits, enums, objects, case objects, and type aliases:
+  `UpperCamelCase` without a leading or trailing underscore, regardless of
+  visibility; companion objects use exactly the companion class name;
 - public API and required overrides: `camelCase`;
 - public and protected method parameters: `camelCase`, because parameter names
   are source API through Scala named arguments;
-- private member methods/values, including spec helpers: `_snake_case`;
+- private member methods/values declared with `def`, `val`, `var`, or
+  `lazy val`, including spec helpers: `_snake_case`; do not apply this rule to
+  `object` declarations;
 - method-local helper functions: `_snake_case_`;
 - private method parameters and ordinary local variables: flatcase;
 - internal private model fields: flatcase unless they are serialized/public
