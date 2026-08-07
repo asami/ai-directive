@@ -71,7 +71,18 @@ Rules:
 - Read from that block's `/*` through the matching `*/`, even when long package/import sections make the first N lines insufficient.
 - Look for "@since", "version", and "@version" lines only inside that comment block.
 - Do not insert or move version lines outside the detected comment block.
-- If no version marker exists anywhere in the file, preserve the repository's convention; do not invent a new header unless the repository rule explicitly requires one.
+- Repository-managed product Scala sources and executable specifications,
+  including `src/main/scala` and `src/test/scala`, require a version-history
+  header. If no version marker exists anywhere in one of those files, treat it
+  as historical maintenance debt and add the repository's standard header.
+- Recover `@since` from the earliest reliable repository evidence, such as the
+  file-introduction commit or an authoritative source record. For a new file,
+  use its actual creation date. If no earlier date can be established, use the
+  actual repair date and do not invent an earlier date.
+- Preserve established author attribution when known; do not fabricate it.
+- Do not force this repair onto sample, example, or demo trees, generated
+  output, vendored or third-party source, or build output unless a
+  repository-local rule explicitly opts those files in.
 
 2. Update (Latest Version)
 - Replace the latest "@version" line with the target Scala file's actual source-update date
@@ -174,8 +185,12 @@ After:
 - If "@version" does NOT exist:
   - If "@since" exists:
     - Insert "@version" immediately after "@since"
-  - Otherwise:
-    - Insert at the top comment block
+  - Otherwise, for a repository-managed product source or executable specification:
+    - Create or extend the standard header comment before the primary top-level
+      definition, after package/import declarations
+    - Insert `@since` followed by `@version`
+  - Otherwise, for an excluded sample/generated/vendor/build-output file:
+    - Preserve the local convention unless a repository-local rule opts it in
 
 6. Constraints
 - Do NOT modify any code outside comments

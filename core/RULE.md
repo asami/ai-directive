@@ -3344,6 +3344,14 @@ Scope:
 - Applies to Scala files (`*.scala`) edited in the current task.
 - Apply this update as part of the file edit, not only at commit time.
 - Before committing, re-check all Scala files included in the commit and exclude deleted files.
+- Repository-managed product Scala sources and executable specifications,
+  including files under `src/main/scala` and `src/test/scala`, MUST have a
+  version-history header. A missing header in an existing product source or
+  specification is historical maintenance debt and MUST be repaired when the
+  file becomes a task or review target.
+- This missing-header repair requirement does not apply to sample, example, or
+  demo source trees, generated output, vendored or third-party source, or build
+  output unless a repository-local rule explicitly opts those files in.
 
 Date format:
 - Use current system date with:
@@ -3385,8 +3393,17 @@ Update behavior:
    - Use a full-file marker search such as:
        `rg -n '@since|@version|@author|^[[:space:]]*\*[[:space:]]+version' <file>`
    - Parse the complete comment block that contains the relevant version markers.
-   - If no version marker exists anywhere in the file, preserve the repository's
-     convention; do not invent a new header unless the repository rule explicitly requires one.
+   - If no version marker exists anywhere in a repository-managed product source
+     or executable specification, add the repository's standard version-history
+     header. Do not preserve the missing marker as a convention.
+   - Recover `@since` from the earliest reliable repository evidence, such as the
+     file-introduction commit or an authoritative source record. For a new file,
+     use its actual creation date. If no earlier date can be established, use the
+     actual header-repair date and do not invent an earlier date.
+   - Preserve the repository's established author attribution when it is known;
+     do not fabricate attribution.
+   - For excluded sample/generated/vendor/build-output files, preserve the local
+     convention unless a repository-local rule explicitly requires a header.
 3. Replace latest `@version` with today's date.
 4. Preserve history:
    - Replaced `@version` entries MUST be converted to history entries:
@@ -3416,7 +3433,12 @@ Update behavior:
            `* @version Mar. 24, 2026`
 6. Insert:
    - If no `@version` exists and `@since` exists, insert `@version` immediately after `@since`.
-   - If neither exists, insert `@version` into the top header comment block.
+   - If neither exists in a required product source or executable specification,
+     create or extend the standard header comment before the primary top-level
+     definition, after package/import declarations, and insert `@since` followed
+     by `@version`.
+   - If neither exists in an excluded file, preserve the local convention unless
+     a repository-local rule opts the file in.
 7. Constraints:
    - Do not modify code outside comments.
    - Preserve comment indentation and style.
