@@ -152,7 +152,7 @@ Executable Specifications are organized by package.
 ### rules
 
 - naming rules
-- **type modeling rule (abstract class vs trait)**: `docs/rules/type-modeling.md`
+- **Scala 2 / Scala 3 type-modeling rule**: `type-modeling.md`
 - spec style rules
 - operation / parameter definition rules
 - rules only; no exploration notes
@@ -244,6 +244,13 @@ which document governs a given question or decision.
 
   RULE.md defines **what MUST be obeyed** at the implementation level.
   It does not define process or progress semantics.
+
+---
+
+### Scala 2 / Scala 3 Type Modeling
+
+- **Scala 2 / Scala 3 type-modeling rule**: `type-modeling.md`
+  Governs semantic type selection for Scala 2 and Scala 3.
 
 ---
 
