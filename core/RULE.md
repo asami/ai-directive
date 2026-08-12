@@ -695,6 +695,109 @@ This rule ensures that AI-assisted development:
 - Dangerous behavior must never be implicit
 - Naming is part of the API contract, not an implementation detail
 
+# Source Size and Responsibility Rule
+
+This rule keeps hand-written source and Executable Specifications small enough
+to understand, review, and change safely. Line counts are review triggers, not
+substitutes for responsibility analysis.
+
+## Scope And Exceptions
+
+This rule applies to hand-written product source and Executable Specifications.
+Generated output, vendored or third-party code, build output, and intentionally
+tabular static data are excluded. A repository may define a reviewed exception
+in `docs/rules/shared-directive-exceptions.md` when one physical file is part of
+a required external or generated contract.
+
+Reviewers MUST consider both the physical file and its primary class, trait,
+enum, or object. Multiple independent top-level definitions in one file are
+themselves evidence that a file split may be appropriate.
+
+## Ordinary Source Size Guidance
+
+For an ordinary class, trait, enum, object, or its primary source file:
+
+- 200 to 500 lines is the preferred working range.
+- 500 to 800 lines is acceptable when the source still has one cohesive
+  responsibility.
+- At 800 to 1,000 lines, authors and reviewers MUST actively evaluate a split.
+- More than 1,000 lines is source-size debt by default and requires either a
+  recorded split disposition or a documented exception.
+- 1,500 lines is the normal upper limit for hand-written ordinary source.
+- More than 2,000 lines is high-priority source-size debt and MUST NOT be
+  introduced as a new ordinary source file without an explicit exception.
+
+Line count is not the only trigger. A split MUST also be considered when any of
+the following makes the source difficult to review as one responsibility:
+
+- more than roughly 15 to 20 public methods;
+- three or more independently changing responsibilities;
+- more than roughly 7 to 10 constructor dependencies;
+- several private helper groups that can be named as independent roles;
+- multiple unrelated reasons to change the same class or file;
+- a reviewer cannot explain the whole source and its invariants in one bounded
+  review pass.
+
+Crossing one approximate structural threshold does not automatically require a
+split when the source remains cohesive. Crossing the line-count debt threshold
+does require an explicit review disposition.
+
+## Executable Specification Size Guidance
+
+Executable Specifications may be larger than ordinary classes because they
+serve as behavior documentation, but they MUST remain reviewable:
+
+- Prefer 50 to 80 behavior examples or fewer in one Spec.
+- Treat roughly 100 behavior examples as the normal upper limit for one Spec.
+- Prefer 3,000 to 5,000 lines or fewer in one Spec.
+- More than 5,000 lines or 100 behavior examples is specification-size debt by
+  default and requires a split disposition or documented exception.
+- Keep one example's Given / When / Then flow focused; roughly 3 to 7 major
+  steps is the normal readable range.
+
+Split Specs by observable behavior surface, not by arbitrary line ranges. A
+split MUST preserve executable coverage and the semantic grouping expressed by
+`should`, `which`, `in`, and Given / When / Then.
+
+## Review Detection And Disposition
+
+Every source review MUST check touched source files and directly affected source
+files for source-size debt. The review report MUST classify each newly detected
+item in exactly one of these ways:
+
+1. **Current Review Finding / FIX**
+   - Use this when the correction is a mechanical file split.
+   - The split may add the destination file or files and update the original
+     file, but it requires no changes to any other existing source file.
+   - It MUST preserve behavior, public API, package identity, initialization
+     order, serialization, lifecycle, and dependency direction.
+   - It MUST be small enough to validate inside the current review-fix cycle.
+   - Once admitted by review, this rule is explicit authorization for that
+     bounded split despite the default no-refactoring rule above.
+
+2. **Existing Debt / Hygiene Follow-up**
+   - Use this when a safe split requires changes to any other existing source
+     file, including call sites, imports, public or protected APIs, dependency
+     injection, wiring, lifecycle, serialization, ABI, or broad specification
+     restructuring.
+   - Record the item in the active Phase Hygiene Ledger with a stable ID,
+     affected source, reason the split is non-local, and intended follow-up
+     Phase, Step, or task.
+   - Do not expand the current review-fix scope to perform this work.
+
+A pre-existing oversized source is not automatically a release blocker merely
+because of its size. It becomes a current blocker when the active change makes
+the debt worse, creates a new oversized source, depends on an unsafe structure,
+or the size/responsibility problem contributes to a correctness or reviewability
+failure in the current scope. A correctness defect MUST remain a normal finding;
+it MUST NOT be downgraded to Hygiene merely because splitting the source is
+large or difficult.
+
+Reviewers MUST report the measured line count, the threshold crossed, the
+responsibility evidence, and the selected FIX or Hygiene disposition. Authors
+MUST NOT evade the rule with cosmetic whitespace removal, compressed formatting,
+or arbitrary partial extraction that leaves the same responsibility tangle.
+
 ## AI Interaction Command Catalog
 
 AI-assisted development in this project uses a standardized
