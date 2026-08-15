@@ -3605,6 +3605,48 @@ Complexity discipline:
 - For local single-user/single-writer tools, concurrency and interference protection SHOULD remain minimal unless the Failure Model explicitly brings those failures into scope.
 - When defensive handling becomes comparable to or larger than the normal operation, re-evaluate the failure model and architecture before adding more checks.
 
+Repository Script Placement Rules
+----------------------------------------------------------------------
+
+These rules define the source-tree placement of repository-managed script
+entry points.
+
+Scope:
+- Applies to executable entry scripts maintained by a repository under
+  `scripts/`.
+- Does not classify generated scripts or runtime/test work artifacts under
+  `target/`.
+
+Operational entry points:
+- Operator-facing runtime, build, setup, maintenance, publication, migration,
+  and generation entry scripts MUST be placed directly under `scripts/`.
+- The `scripts/` root is the discoverable operational command surface. An
+  operational entry point MUST NOT be hidden under `scripts/test/`.
+
+Test entry points:
+- Scripts whose sole purpose is test, verification, fixture execution, test
+  data preparation, or test-environment setup MUST be placed under
+  `scripts/test/`.
+- A script does not become operational merely because CI invokes it. Classify
+  it by its purpose and side effects.
+- A test-only entry point MUST NOT be placed directly under `scripts/`.
+
+Shared helpers:
+- Non-entrypoint helpers shared by operational scripts MAY be placed under
+  `scripts/lib/`.
+- Non-entrypoint helpers and fixtures used only by test scripts MAY be placed
+  under `scripts/test/lib/` or another clearly test-owned subtree of
+  `scripts/test/`.
+- Helper files MUST NOT masquerade as operator-facing entry points.
+
+Migration:
+- New and moved scripts MUST follow this layout immediately.
+- Existing nonconforming scripts SHOULD migrate when touched unless a
+  repository-wide migration handles them together.
+- A repository-specific exception MUST be explicit in
+  `docs/rules/shared-directive-exceptions.md`; directory history or existing
+  placement alone is not an exception.
+
 ----------------------------------------------------------------------
 Work Artifact Placement Rules
 ----------------------------------------------------------------------
