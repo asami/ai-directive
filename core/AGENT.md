@@ -58,19 +58,32 @@ editing. The authority order is:
 9. `src/main/scala/`
 10. `src/test/scala/`
 
-## SBT Execution Boundary
+## Command-Group Execution Policy
 
-- Every top-level SBT command, including one started by a script and regardless
-  of project type, MUST delegate through the registered `cncf_command_runner`
-  and shared `cncf-sbt-serial-execution` wrapper. The first wrapper attempt
-  MUST request scoped permissions for normal SBT boot/home, dependency-cache,
-  and local artifact-cache access.
-- Direct or sandbox-only SBT execution, isolated-cache workarounds, and
-  symlink permission workarounds are prohibited. Terminal completion and
-  lock-release evidence are required.
-- Treat a boot-lock access denial as an execution-permission failure, not a
-  project build, test, or publish failure; stop for a correctly privileged
-  rerun.
+Agents MUST classify an execution request before invoking a command:
+
+- Top-level SBT, including a script that starts SBT: registered
+  `cncf_command_runner` plus the shared `cncf-sbt-serial-execution` wrapper.
+  The first attempt requests scoped escalation for normal SBT boot/home,
+  dependency, and local-artifact caches. Direct or sandbox-only SBT and
+  isolated-cache or symlink permission workarounds are prohibited. Accept
+  completion only with terminal lock-release evidence. A boot-lock denial is
+  an execution-permission failure, not a project build, test, or publish
+  failure, and stops for a correctly privileged rerun.
+- Exact Cozy or Dox CLI: registered `cozy_command_runner`, with first-attempt
+  scoped escalation.
+- Reviewed one-shot project script or launcher: registered
+  `cncf_runtime_runner`.
+- Long-lived script or launcher with readiness or session ownership: registered
+  `cncf_runtime_session_runner`.
+- Frozen Commit Manifest: registered `cncf_commit_runner`, which stages and
+  commits only the manifest and never edits files.
+- Planning, inspection, normal shell or Git utilities, semantic decisions, and
+  editing: parent agent, except an applicable workflow may separately assign an
+  admitted editing worker.
+
+If the required runner is unavailable or scoped escalation is denied, stop and
+report; never fall back to direct execution or another command group.
 
 
 ## Executable Specification Policy
