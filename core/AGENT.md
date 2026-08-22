@@ -62,7 +62,22 @@ editing. The authority order is:
 
 Agents MUST classify an execution request before invoking a command:
 
-- Top-level SBT, including a script that starts SBT: registered
+- Publication: classify local/warehouse and remote/public publication
+  separately before SBT. An explicit `$cncf-lib-publish`, `$cncf-car-publish`,
+  `$cncf-car-publish-recursive`, or equivalent explicit user request is the
+  sole semantic authorization for its discovered exact publication scope. For
+  remote `publish`, the parent MUST freeze and attach a matching Publication
+  Authorization Envelope and current Publication Execution Binding to the
+  registered `cncf_command_runner` delegation; the runner accepts that
+  parent-authoritative evidence without asking the user to run `sbt publish`
+  manually or repeat approval. Scoped execution escalation remains separate
+  and required. For local/warehouse publication, use the project-declared
+  local publication task through the SBT group; never substitute it for public
+  release publication. If explicit publication authority, a matching binding or
+  envelope, target, version, or dependency order is absent or ambiguous, stop
+  and report the exact blocker; never use manual `sbt publish` as a workaround.
+- Top-level SBT, including a script that starts SBT and any local/warehouse
+  publication task after its Publication classification: registered
   `cncf_command_runner` plus the shared `cncf-sbt-serial-execution` wrapper.
   The first attempt requests scoped escalation for normal SBT boot/home,
   dependency, and local-artifact caches. Direct or sandbox-only SBT and
