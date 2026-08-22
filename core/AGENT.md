@@ -71,11 +71,20 @@ Agents MUST classify an execution request before invoking a command:
   registered `cncf_command_runner` delegation; the runner accepts that
   parent-authoritative evidence without asking the user to run `sbt publish`
   manually or repeat approval. Scoped execution escalation remains separate
-  and required. For local/warehouse publication, use the project-declared
-  local publication task through the SBT group; never substitute it for public
-  release publication. If explicit publication authority, a matching binding or
-  envelope, target, version, or dependency order is absent or ambiguous, stop
-  and report the exact blocker; never use manual `sbt publish` as a workaround.
+  and required. When the user explicitly requests local/warehouse publication,
+  or a test requiring its project-declared local publication task, the parent
+  delegation MUST carry the attributable user-request summary, exact logical
+  task argv, admitted project root, and allowed local warehouse/output roots.
+  The registered `cncf_command_runner` accepts that parent-supplied
+  authorization without asking the user to run SBT manually or repeat approval.
+  It is not a remote Publication Authorization Envelope and MUST NOT authorize
+  remote/public publication. Use the local task through the SBT group; never
+  substitute it for public release publication. If this local handoff is
+  absent, the runner MUST stop with the exact missing scope rather than direct
+  the user to execute SBT manually. If explicit publication authority, a
+  matching remote binding or envelope, target, version, or dependency order is
+  absent or ambiguous, stop and report the exact blocker; never use manual
+  `sbt publish` as a workaround.
 - Top-level SBT, including a script that starts SBT and any local/warehouse
   publication task after its Publication classification: registered
   `cncf_command_runner` plus the shared `cncf-sbt-serial-execution` wrapper.
