@@ -58,6 +58,20 @@ editing. The authority order is:
 9. `src/main/scala/`
 10. `src/test/scala/`
 
+## SBT Execution Boundary
+
+- Every top-level SBT command, including one started by a script and regardless
+  of project type, MUST delegate through the registered `cncf_command_runner`
+  and shared `cncf-sbt-serial-execution` wrapper. The first wrapper attempt
+  MUST request scoped permissions for normal SBT boot/home, dependency-cache,
+  and local artifact-cache access.
+- Direct or sandbox-only SBT execution, isolated-cache workarounds, and
+  symlink permission workarounds are prohibited. Terminal completion and
+  lock-release evidence are required.
+- Treat a boot-lock access denial as an execution-permission failure, not a
+  project build, test, or publish failure; stop for a correctly privileged
+  rerun.
+
 
 ## Executable Specification Policy
 
