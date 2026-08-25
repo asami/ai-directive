@@ -5,6 +5,11 @@ This repository defines the **authoritative AI directive** used across projects.
 It provides a structured contract that governs how different AI runtimes
 (interactive and execution-oriented) must behave when working with a project.
 
+For a concise public orientation to developing with this contract, see the
+[public development guide](public/ai-development-guide.md). The guide is a
+descriptive projection; the shared rules remain authoritative in `core/` and
+the selected runtime profile.
+
 This repository is typically mounted into a project as a Git submodule at:
 
     ai/directive
