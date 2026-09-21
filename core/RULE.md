@@ -3222,6 +3222,52 @@ Update behavior:
    - Re-stage files after comment updates.
 
 ----------------------------------------------------------------------
+Defensive Complexity and Failure Model Rules
+----------------------------------------------------------------------
+
+These rules prevent speculative robustness mechanisms from increasing implementation complexity without an explicit requirement.
+
+Principle:
+- Robustness is a modeled requirement, not an implementation embellishment.
+- Defensive mechanisms MUST be traceable as:
+    Failure Model -> Required Robustness -> Mechanism
+- The implementation MUST prefer the simplest mechanism that satisfies the explicitly stated execution and failure model.
+
+Failure model:
+- Before introducing a defensive mechanism, identify the concrete failure it is intended to handle.
+- The failure MUST be part of an explicit requirement, specification, architectural decision, established runtime contract, or demonstrated failure scenario.
+- A failure MUST NOT be treated as in scope merely because it is technically possible.
+- When the execution model already excludes a failure (for example, a single-writer operation), code MUST NOT add machinery to defend against that excluded failure.
+
+Prohibited speculative defenses:
+- Do NOT introduce checksums, content hashes, repeated file identity checks, locks, retries, backup copies, rollback mechanisms, duplicate validation, redundant existence checks, or equivalent defensive machinery solely:
+  - "just in case"
+  - for hypothetical future requirements
+  - because another process could theoretically interfere
+  - because an additional check appears safer in isolation
+- Do NOT stack multiple defensive mechanisms for the same failure unless the specification requires distinct guarantees that justify each mechanism.
+
+Mechanism selection:
+- Use the least complex mechanism that provides the required guarantee.
+- Prefer assumptions already guaranteed by the execution model over re-verifying those assumptions in code.
+- Prefer a direct read/transform/write flow when concurrent modification is outside the failure model.
+- If crash consistency is required, use the platform's appropriate atomic-write mechanism rather than adding unrelated integrity checks.
+- If concurrent modification is explicitly in scope, use the architecture's established concurrency/versioning mechanism rather than inventing local hash-based protocols.
+
+Justification and review:
+- A non-trivial defensive mechanism MUST have a reviewable justification identifying:
+  1. the failure model,
+  2. the required guarantee,
+  3. why the selected mechanism is the simplest adequate mechanism.
+- Comments MUST NOT be used to manufacture a requirement that does not exist in the specification or architecture.
+- During review, defensive code without such traceability SHOULD be removed rather than preserved as harmless extra safety.
+
+Complexity discipline:
+- Defensive code has a complexity cost and MUST be treated as such.
+- A local safety improvement MUST NOT be accepted when it materially complicates the normal path without a corresponding system requirement.
+- When defensive handling becomes comparable to or larger than the normal operation, re-evaluate the failure model and architecture before adding more checks.
+
+----------------------------------------------------------------------
 Work Artifact Placement Rules
 ----------------------------------------------------------------------
 
