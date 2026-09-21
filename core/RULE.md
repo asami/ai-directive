@@ -3235,9 +3235,15 @@ Principle:
 
 Failure model:
 - Before introducing a defensive mechanism, identify the concrete failure it is intended to handle.
-- The failure MUST be part of an explicit requirement, specification, architectural decision, established runtime contract, or demonstrated failure scenario.
+- The failure MUST be part of an explicit requirement, specification, architectural decision, established runtime contract, demonstrated failure scenario, or supplied resolved Failure Model.
 - A failure MUST NOT be treated as in scope merely because it is technically possible.
-- When the execution model already excludes a failure (for example, a single-writer operation), code MUST NOT add machinery to defend against that excluded failure.
+- Execution Model defines the operating assumptions and may select a default Failure Model.
+- Failure Model may be declared and refined at architectural scopes such as Component, Service, and Operation.
+- When a Resolved Failure Model is supplied, it is the authoritative implementation boundary. AI MUST consume it as given and MUST NOT reinterpret inheritance/defaults or silently extend it.
+- An IN_SCOPE failure permits only the robustness required by the specification; it does not by itself justify any particular mechanism.
+- An OUT_OF_SCOPE failure is a negative implementation constraint. Code MUST NOT add machinery whose purpose is solely to defend against that failure.
+- When the execution model already excludes a failure (for example, a local single-user or single-writer operation), code MUST NOT add machinery to defend against that excluded failure.
+- If implementation work reveals a materially relevant failure absent from the supplied model, AI MUST surface it as a model/specification gap and defer expansion of robustness until the authoritative model is updated.
 
 Prohibited speculative defenses:
 - Do NOT introduce checksums, content hashes, repeated file identity checks, locks, retries, backup copies, rollback mechanisms, duplicate validation, redundant existence checks, or equivalent defensive machinery solely:
@@ -3264,7 +3270,10 @@ Justification and review:
 
 Complexity discipline:
 - Defensive code has a complexity cost and MUST be treated as such.
+- Defensive mechanisms are themselves potential failure sources: additional state, branches, checks, and recovery paths increase the implementation surface in which defects can occur.
+- Robustness MUST NOT be increased by default when doing so reduces simplicity, testability, or reliability for the declared Execution Model.
 - A local safety improvement MUST NOT be accepted when it materially complicates the normal path without a corresponding system requirement.
+- For local single-user/single-writer tools, concurrency and interference protection SHOULD remain minimal unless the Failure Model explicitly brings those failures into scope.
 - When defensive handling becomes comparable to or larger than the normal operation, re-evaluate the failure model and architecture before adding more checks.
 
 ----------------------------------------------------------------------
