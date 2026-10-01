@@ -3608,61 +3608,75 @@ Complexity discipline:
 
 
 ----------------------------------------------------------------------
-Skill Procedural Execution Boundary
+Skill Specification and Execution Boundary
 ----------------------------------------------------------------------
 
-These rules constrain AI-authored Skill procedures so that execution-control
-complexity does not leak into the Skill layer.
+These rules prevent Workflow/control semantics from leaking into executable
+Skill Logic.
 
-Principle:
-- A Skill MUST be written as a human-readable, conceptually single-threaded
-  sequential procedure for the work assigned to it.
-- A Skill MUST assume that the surrounding execution environment has already
-  established the execution conditions required to perform that work safely.
-- "Single-threaded" is a semantic contract for the Skill, not a prohibition on
-  internal parallel computation performed by an implementation/provider.
+Separation:
+- Skill Specification SHOULD describe purpose, responsibilities, expected
+  inputs/results, semantic work, and the top-level work description in a form
+  understandable to humans.
+- Skill Logic MUST remain a thin semantic worker / Workflow adapter.
+- Executable sequencing, branching, iteration, closure, continuation,
+  admission, retry/recovery policy, and durable progression belong to the
+  surrounding Workflow/StateMachine/runtime architecture.
+- Human readability of the overall work procedure MUST NOT be used as a reason
+  to duplicate Workflow control flow inside Skill Logic.
+
+Skill Logic:
+- Skill Logic MUST process only the bounded semantic work requested by the
+  current WorkOrder/Continuation and return the required typed Result/Evidence.
+- Skill Logic MUST NOT choose the next Workflow Action or reproduce the
+  top-level procedure as local control flow.
+- One Skill Logic invocation MAY treat its assigned WorkOrder as a local
+  sequential unit. This is an execution assumption for the bounded work, not
+  ownership of the overall procedure.
+- Provider internals MAY use parallel computation when appropriate, provided
+  that concurrent-worker coordination does not become Skill semantics.
 
 Concurrency boundary:
-- A Skill MUST NOT originate, select, acquire, release, or manage locks, leases,
-  mutexes, semaphores, concurrent-worker ownership, deadlock handling, or other
-  exclusion/coordination mechanisms.
-- A Skill MUST NOT poll, wait, retry, branch, or add recovery logic merely
+- Skill Logic MUST NOT originate, select, acquire, release, or manage locks,
+  leases, mutexes, semaphores, concurrent-worker ownership, deadlock handling,
+  or other exclusion/coordination mechanisms.
+- Skill Logic MUST NOT poll, wait, retry, branch, or add recovery logic merely
   because another Skill, agent, process, or worker could theoretically interfere.
-- A Skill MUST NOT implement a local concurrency/versioning protocol, including
-  hash-based or content-identity substitutes for explicit execution ownership.
+- Skill Logic MUST NOT implement a local concurrency/versioning protocol,
+  including hash-based or content-identity substitutes for explicit execution
+  ownership.
 - Required concurrency, exclusion, execution ownership, scheduling,
   continuation, admission, retry/recovery, and durable execution coordination
-  belong to the surrounding Workflow/StateMachine/runtime architecture.
+  belong to Workflow/StateMachine/runtime.
 - When the authoritative Execution/Failure Model brings concurrent interference
-  into scope, the Skill still does not select the mechanism. It relies on the
-  architecture-provided execution-control mechanism and executes the resulting
-  WorkOrder/procedure sequentially.
+  into scope, Skill Logic still does not select the mechanism. It relies on the
+  architecture-provided execution-control mechanism.
 
-Procedural responsibility:
-- Skill is appropriate for AI-native semantic work, ambiguous/non-routine work,
-  and human-readable top-level work procedures.
-- A Skill MAY call or participate in deterministic Operations,
-  Workflow/StateMachine execution, human approval, or sub-Skills while keeping
-  the top-level procedure readable to a human.
-- As work becomes deterministic, move the corresponding execution semantics
-  into Operation/Workflow/StateMachine rather than extending the Skill with
-  state-machine, concurrency, or recovery machinery.
+Semantic responsibility:
+- Skill Logic is appropriate for AI-native semantic work and ambiguous or
+  non-routine semantic work that cannot yet be represented deterministically.
+- As work becomes deterministic, move it into Operation/Workflow/StateMachine.
+  The expected result is thinner Skill Logic, not preservation of old control
+  flow for readability.
+- Human-readable explanation of the overall work remains in Skill Specification
+  and related process/design documentation.
 
 Model-gap rule:
-- If correct Skill execution appears to require local exclusion, concurrent
-  ownership, retry/recovery coordination, or durable state progression, AI MUST
-  treat this as an execution-architecture/modeling gap rather than adding the
-  mechanism to the Skill.
+- If correct Skill Logic appears to require local sequencing across multiple
+  Workflow steps, exclusion, concurrent ownership, retry/recovery coordination,
+  closure progression, or durable state progression, AI MUST treat this as a
+  Workflow/execution-architecture modeling gap rather than adding the mechanism
+  to Skill Logic.
 - AI MUST surface the required guarantee so the authoritative Workflow,
   Execution Model, or Failure Model can supply it.
 
 Relationship to Defensive Complexity:
 - These rules specialize the Defensive Complexity and Failure Model Rules for
-  Skill authoring.
-- They do not weaken an explicit runtime concurrency requirement; they place
-  responsibility for satisfying that requirement outside the Skill.
+  Skill implementation.
+- They do not weaken explicit runtime requirements; they place responsibility
+  for satisfying those requirements in the correct execution layer.
 - A lower-level Skill instruction, generated procedure, or implementation note
-  cannot authorize local concurrency machinery when the surrounding
+  cannot authorize local execution-control machinery when the surrounding
   architecture owns that concern.
 
 
