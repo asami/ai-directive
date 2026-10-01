@@ -3615,11 +3615,16 @@ because hash-based techniques are a strong implementation prior and can hide
 missing domain or control models behind locally convenient mechanisms.
 
 Default prohibition:
-- AI MUST NOT introduce a hash, checksum, digest, fingerprint, content-derived
-  identifier, or hash-based comparison into application domain logic or
-  middleware core logic by default.
-- Hash-based mechanisms are permission-based exceptions, not ordinary
-  implementation choices.
+- AI MUST NOT originate or select a hash, checksum, digest, fingerprint,
+  content-derived identifier, or hash-based comparison as an implementation
+  or design mechanism. This prohibition applies to application code,
+  middleware core logic, infrastructure code, and library internals.
+- Hash-based mechanisms are externally justified, permission-based exceptions,
+  not ordinary AI implementation choices.
+- A hash mechanism MUST be required by an authoritative external source such as
+  an approved architecture or specification, a protocol/format contract, an
+  approved security design, or an explicit human instruction. AI reasoning
+  alone is not authority to introduce one.
 - When no explicit permission or independently valid requirement exists, AI
   MUST proceed without the hash-based mechanism and use the explicit domain or
   control model instead.
@@ -3638,9 +3643,12 @@ Semantic substitution prohibition:
   architecture's explicit control model rather than content-derived identity.
 
 Permission and justification:
-- A hash-based mechanism MAY be introduced only when it is explicitly required
-  by a functional requirement, protocol, architecture, security/integrity
-  contract, content-addressed-storage contract, or an approved Failure Model.
+- A hash-based mechanism MAY be implemented only when it is explicitly required
+  by an authoritative functional requirement, protocol, architecture,
+  security/integrity contract, content-addressed-storage contract, approved
+  Failure Model that already selects the mechanism, or explicit human approval.
+- An AI-authored or AI-derived lower-level specification does not count as
+  external authority merely because it contains the word hash.
 - Before implementation, the justification MUST identify:
   1. the concrete requirement or in-scope failure,
   2. why explicit domain/control data is insufficient or inapplicable,
@@ -3654,7 +3662,7 @@ Permission and justification:
   or an unclear model, AI MUST stop the hash-based implementation and surface
   the modeling gap.
 
-Normally valid exception domains:
+Externally justified exception domains:
 - Cryptographic verification and signatures.
 - Integrity checks explicitly required by a protocol or storage contract.
 - Checksums whose specified purpose is transmission/storage corruption
