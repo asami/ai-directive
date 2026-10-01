@@ -3605,6 +3605,87 @@ Complexity discipline:
 - For local single-user/single-writer tools, concurrency and interference protection SHOULD remain minimal unless the Failure Model explicitly brings those failures into scope.
 - When defensive handling becomes comparable to or larger than the normal operation, re-evaluate the failure model and architecture before adding more checks.
 
+
+----------------------------------------------------------------------
+Hash Prohibition Rules
+----------------------------------------------------------------------
+
+These rules are a hard constraint for AI-authored implementation. They exist
+because hash-based techniques are a strong implementation prior and can hide
+missing domain or control models behind locally convenient mechanisms.
+
+Default prohibition:
+- AI MUST NOT introduce a hash, checksum, digest, fingerprint, content-derived
+  identifier, or hash-based comparison into application domain logic or
+  middleware core logic by default.
+- Hash-based mechanisms are permission-based exceptions, not ordinary
+  implementation choices.
+- When no explicit permission or independently valid requirement exists, AI
+  MUST proceed without the hash-based mechanism and use the explicit domain or
+  control model instead.
+
+Semantic substitution prohibition:
+- A hash MUST NOT substitute for explicit identity, state, causality, lifecycle,
+  ownership, version, cycle management, deduplication semantics, or other
+  control data.
+- If a proposed hash is being used to answer questions such as "which entity?",
+  "which execution?", "has this state been visited?", "is this the same
+  business object?", "what caused this?", or "is this duplicate?", first model
+  the corresponding semantic information explicitly.
+- In domain logic, business identity MUST come from the domain model rather
+  than content equality.
+- In middleware core logic, execution and control identity MUST come from the
+  architecture's explicit control model rather than content-derived identity.
+
+Permission and justification:
+- A hash-based mechanism MAY be introduced only when it is explicitly required
+  by a functional requirement, protocol, architecture, security/integrity
+  contract, content-addressed-storage contract, or an approved Failure Model.
+- Before implementation, the justification MUST identify:
+  1. the concrete requirement or in-scope failure,
+  2. why explicit domain/control data is insufficient or inapplicable,
+  3. why hashing is the simplest adequate mechanism,
+  4. exactly what data is hashed and what the resulting value means.
+- Existing lower-level code, a task note, implementation sketch, generated
+  specification, or subordinate design that already mentions a hash is NOT by
+  itself sufficient justification. The use MUST still be checked against this
+  higher-level rule and the authoritative domain, Execution, and Failure Models.
+- If that check reveals that the hash is compensating for missing control data
+  or an unclear model, AI MUST stop the hash-based implementation and surface
+  the modeling gap.
+
+Normally valid exception domains:
+- Cryptographic verification and signatures.
+- Integrity checks explicitly required by a protocol or storage contract.
+- Checksums whose specified purpose is transmission/storage corruption
+  detection.
+- Content-addressed storage where content identity is the defined abstraction.
+- External protocols or interoperable formats that explicitly require a
+  particular digest.
+
+These exceptions permit only the hash required for that purpose. They do not
+permit the resulting value to leak into unrelated domain identity or control
+semantics.
+
+Review requirement:
+- Any newly introduced hash-based mechanism in application or middleware code
+  MUST be treated as a review trigger.
+- Review MUST verify the permission and justification above rather than merely
+  checking that the hash implementation is technically correct.
+- If justification is absent, ambiguous, or based only on defensive intuition,
+  the hash-based mechanism MUST be removed and the underlying model revisited.
+- Passing tests, local correctness, or apparent robustness does not override
+  this rule.
+
+Relationship to Defensive Complexity:
+- These rules strengthen, rather than replace, the Defensive Complexity and
+  Failure Model Rules.
+- The normal traceability remains:
+    Failure Model -> Required Robustness -> Mechanism
+- For hash-based mechanisms, satisfying that traceability is necessary but not
+  sufficient: the explicit permission and semantic-substitution checks in this
+  section also apply.
+
 Repository Script Placement Rules
 ----------------------------------------------------------------------
 
