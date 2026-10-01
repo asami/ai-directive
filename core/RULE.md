@@ -3606,6 +3606,66 @@ Complexity discipline:
 - When defensive handling becomes comparable to or larger than the normal operation, re-evaluate the failure model and architecture before adding more checks.
 
 
+
+----------------------------------------------------------------------
+Skill Procedural Execution Boundary
+----------------------------------------------------------------------
+
+These rules constrain AI-authored Skill procedures so that execution-control
+complexity does not leak into the Skill layer.
+
+Principle:
+- A Skill MUST be written as a human-readable, conceptually single-threaded
+  sequential procedure for the work assigned to it.
+- A Skill MUST assume that the surrounding execution environment has already
+  established the execution conditions required to perform that work safely.
+- "Single-threaded" is a semantic contract for the Skill, not a prohibition on
+  internal parallel computation performed by an implementation/provider.
+
+Concurrency boundary:
+- A Skill MUST NOT originate, select, acquire, release, or manage locks, leases,
+  mutexes, semaphores, concurrent-worker ownership, deadlock handling, or other
+  exclusion/coordination mechanisms.
+- A Skill MUST NOT poll, wait, retry, branch, or add recovery logic merely
+  because another Skill, agent, process, or worker could theoretically interfere.
+- A Skill MUST NOT implement a local concurrency/versioning protocol, including
+  hash-based or content-identity substitutes for explicit execution ownership.
+- Required concurrency, exclusion, execution ownership, scheduling,
+  continuation, admission, retry/recovery, and durable execution coordination
+  belong to the surrounding Workflow/StateMachine/runtime architecture.
+- When the authoritative Execution/Failure Model brings concurrent interference
+  into scope, the Skill still does not select the mechanism. It relies on the
+  architecture-provided execution-control mechanism and executes the resulting
+  WorkOrder/procedure sequentially.
+
+Procedural responsibility:
+- Skill is appropriate for AI-native semantic work, ambiguous/non-routine work,
+  and human-readable top-level work procedures.
+- A Skill MAY call or participate in deterministic Operations,
+  Workflow/StateMachine execution, human approval, or sub-Skills while keeping
+  the top-level procedure readable to a human.
+- As work becomes deterministic, move the corresponding execution semantics
+  into Operation/Workflow/StateMachine rather than extending the Skill with
+  state-machine, concurrency, or recovery machinery.
+
+Model-gap rule:
+- If correct Skill execution appears to require local exclusion, concurrent
+  ownership, retry/recovery coordination, or durable state progression, AI MUST
+  treat this as an execution-architecture/modeling gap rather than adding the
+  mechanism to the Skill.
+- AI MUST surface the required guarantee so the authoritative Workflow,
+  Execution Model, or Failure Model can supply it.
+
+Relationship to Defensive Complexity:
+- These rules specialize the Defensive Complexity and Failure Model Rules for
+  Skill authoring.
+- They do not weaken an explicit runtime concurrency requirement; they place
+  responsibility for satisfying that requirement outside the Skill.
+- A lower-level Skill instruction, generated procedure, or implementation note
+  cannot authorize local concurrency machinery when the surrounding
+  architecture owns that concern.
+
+
 ----------------------------------------------------------------------
 Hash Prohibition Rules
 ----------------------------------------------------------------------
