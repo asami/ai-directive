@@ -3605,6 +3605,29 @@ Complexity discipline:
 - For local single-user/single-writer tools, concurrency and interference protection SHOULD remain minimal unless the Failure Model explicitly brings those failures into scope.
 - When defensive handling becomes comparable to or larger than the normal operation, re-evaluate the failure model and architecture before adding more checks.
 
+Skill authoring:
+
+- Before creating, changing or reviewing a skill, read and apply
+  [Skill Authoring](skill-authoring.md). Its general coordination boundary
+  assigns required mutual exclusion to external execution/resource mechanisms,
+  not a protocol owned by the skill or its helpers.
+
+Single-user Git-managed workbenches:
+
+- For workbench applications and local workflow helpers operated in a
+  Git-managed personal environment under one user's control, read and apply
+  [Single-user Git-managed Workbench Control](workbench-control.md).
+- That normative specialization defines the excluded application contention
+  model, Git-owned development integration, management-hash prohibition,
+  typed control specification and minimal checking policy. Do NOT treat the
+  general mechanism-selection rules above as permission to add application
+  exclusion for competition already excluded by that model.
+- Skills for this personal development environment are themselves workbench
+  applications. Apply
+  [Skill Authoring](skill-authoring.md) and its development-environment
+  specialization to their instructions, helpers, control schemas and saved
+  state, not only to the applications they operate.
+
 Repository Script Placement Rules
 ----------------------------------------------------------------------
 

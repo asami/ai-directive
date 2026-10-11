@@ -204,6 +204,8 @@ Executable Specifications are organized by package.
 
 - naming rules
 - **Scala 2 / Scala 3 type-modeling rule**: `type-modeling.md`
+- **Single-user Git-managed workbench control rule**: `workbench-control.md`
+- **Skill authoring rule**: `skill-authoring.md`
 - spec style rules
 - operation / parameter definition rules
 - rules only; no exploration notes
@@ -301,7 +303,33 @@ which document governs a given question or decision.
 ### Scala 2 / Scala 3 Type Modeling
 
 - **Scala 2 / Scala 3 type-modeling rule**: `type-modeling.md`
-  Governs semantic type selection for Scala 2 and Scala 3.
+  Governs semantic type selection for Scala 2 and Scala 3, including mandatory
+  instance-independent ownership of data types and the prohibition on declaring
+  case classes and concrete data ADTs inside classes or mix-in traits.
+
+---
+
+### Single-user Git-managed Workbench Control
+
+- **workbench-control.md**
+  Governs the single-user execution model of personally controlled, Git-managed
+  workbench applications: repository-level isolation/integration instead of
+  application pseudo-exclusion, typed control data instead of management
+  hashes, and minimal coherent checks. Read this before designing, implementing
+  or reviewing such workflow control. It does not waive storage transactions,
+  external-operation safety or independent build serialization.
+
+---
+
+### Skill Authoring
+
+- **skill-authoring.md**
+  Governs creating, changing and reviewing skills, including instructions,
+  helpers, control schemas, saved state and handoffs. Skills generally delegate
+  required mutual exclusion to an external execution/resource mechanism rather
+  than owning its protocol. Skills for this personal development environment
+  themselves are workbench applications and follow the shared typed-control and
+  minimal-checking policy. Read this before skill authoring.
 
 ---
 
