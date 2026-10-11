@@ -3604,6 +3604,13 @@ Complexity discipline:
 - A local safety improvement MUST NOT be accepted when it materially complicates the normal path without a corresponding system requirement.
 - For local single-user/single-writer tools, concurrency and interference protection SHOULD remain minimal unless the Failure Model explicitly brings those failures into scope.
 - When defensive handling becomes comparable to or larger than the normal operation, re-evaluate the failure model and architecture before adding more checks.
+- Exceptional-path assurance MUST NOT delay completion of the required normal path merely to make misuse, duplicate actions, races, or other low-value operational accidents cleanly recoverable.
+- For out-of-scope or user-responsibility accidents, it is acceptable for the current execution to fail, stop, or require a fresh execution, provided authoritative external assets are not catastrophically destroyed and the specified restart path remains available.
+- Do NOT turn accidental double submission, competing answers, stale intermediate state, or equivalent misuse into a major use case unless the authoritative specification explicitly requires that guarantee.
+- Tests for exceptional paths carry specification and maintenance cost. Do NOT add broad or duplicated concurrency, recovery, replay, consistency, or winner-selection tests merely because those states can be constructed.
+- Main-route quality has priority over exceptional-path assurance. A defensive mechanism MUST be rejected when its state, branching, synchronization, recovery, or verification complexity creates a material risk of defects in the normal path that is not justified by the required guarantee.
+- Complexity-induced defects are a quality failure. Removing unnecessary defensive state and branches is itself a quality improvement when it reduces the implementation state space without violating an authoritative requirement.
+- Development completion is a quality constraint. Review findings MUST NOT silently expand the current phase or task acceptance boundary with newly imagined assurance requirements. A genuinely valuable new guarantee should be proposed separately unless it is required to satisfy the existing authoritative specification.
 
 
 
