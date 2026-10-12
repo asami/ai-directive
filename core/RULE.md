@@ -3604,6 +3604,176 @@ Complexity discipline:
 - A local safety improvement MUST NOT be accepted when it materially complicates the normal path without a corresponding system requirement.
 - For local single-user/single-writer tools, concurrency and interference protection SHOULD remain minimal unless the Failure Model explicitly brings those failures into scope.
 - When defensive handling becomes comparable to or larger than the normal operation, re-evaluate the failure model and architecture before adding more checks.
+- Exceptional-path assurance MUST NOT delay completion of the required normal path merely to make misuse, duplicate actions, races, or other low-value operational accidents cleanly recoverable.
+- For out-of-scope or user-responsibility accidents, it is acceptable for the current execution to fail, stop, or require a fresh execution, provided authoritative external assets are not catastrophically destroyed and the specified restart path remains available.
+- Do NOT turn accidental double submission, competing answers, stale intermediate state, or equivalent misuse into a major use case unless the authoritative specification explicitly requires that guarantee.
+- Tests for exceptional paths carry specification and maintenance cost. Do NOT add broad or duplicated concurrency, recovery, replay, consistency, or winner-selection tests merely because those states can be constructed.
+- Main-route quality has priority over exceptional-path assurance. A defensive mechanism MUST be rejected when its state, branching, synchronization, recovery, or verification complexity creates a material risk of defects in the normal path that is not justified by the required guarantee.
+- Complexity-induced defects are a quality failure. Removing unnecessary defensive state and branches is itself a quality improvement when it reduces the implementation state space without violating an authoritative requirement.
+- Development completion is a quality constraint. Review findings MUST NOT silently expand the current phase or task acceptance boundary with newly imagined assurance requirements. A genuinely valuable new guarantee should be proposed separately unless it is required to satisfy the existing authoritative specification.
+
+
+
+----------------------------------------------------------------------
+Skill Specification and Execution Boundary
+----------------------------------------------------------------------
+
+These rules prevent Workflow/control semantics from leaking into executable
+Skill Logic.
+
+Separation:
+- Skill Specification SHOULD describe purpose, responsibilities, expected
+  inputs/results, semantic work, and the top-level work description in a form
+  understandable to humans.
+- Skill Logic MUST remain a thin semantic worker / Workflow adapter.
+- Executable sequencing, branching, iteration, closure, continuation,
+  admission, retry/recovery policy, and durable progression belong to the
+  surrounding Workflow/StateMachine/runtime architecture.
+- Human readability of the overall work procedure MUST NOT be used as a reason
+  to duplicate Workflow control flow inside Skill Logic.
+
+Skill Logic:
+- Skill Logic MUST process only the bounded semantic work requested by the
+  current WorkOrder/Continuation and return the required typed Result/Evidence.
+- Skill Logic MUST NOT choose the next Workflow Action or reproduce the
+  top-level procedure as local control flow.
+- One Skill Logic invocation MAY treat its assigned WorkOrder as a local
+  sequential unit. This is an execution assumption for the bounded work, not
+  ownership of the overall procedure.
+- Provider internals MAY use parallel computation when appropriate, provided
+  that concurrent-worker coordination does not become Skill semantics.
+
+Concurrency boundary:
+- Skill Logic MUST NOT originate, select, acquire, release, or manage locks,
+  leases, mutexes, semaphores, concurrent-worker ownership, deadlock handling,
+  or other exclusion/coordination mechanisms.
+- Skill Logic MUST NOT poll, wait, retry, branch, or add recovery logic merely
+  because another Skill, agent, process, or worker could theoretically interfere.
+- Skill Logic MUST NOT implement a local concurrency/versioning protocol,
+  including hash-based or content-identity substitutes for explicit execution
+  ownership.
+- Required concurrency, exclusion, execution ownership, scheduling,
+  continuation, admission, retry/recovery, and durable execution coordination
+  belong to Workflow/StateMachine/runtime.
+- When the authoritative Execution/Failure Model brings concurrent interference
+  into scope, Skill Logic still does not select the mechanism. It relies on the
+  architecture-provided execution-control mechanism.
+
+Semantic responsibility:
+- Skill Logic is appropriate for AI-native semantic work and ambiguous or
+  non-routine semantic work that cannot yet be represented deterministically.
+- As work becomes deterministic, move it into Operation/Workflow/StateMachine.
+  The expected result is thinner Skill Logic, not preservation of old control
+  flow for readability.
+- Human-readable explanation of the overall work remains in Skill Specification
+  and related process/design documentation.
+
+Model-gap rule:
+- If correct Skill Logic appears to require local sequencing across multiple
+  Workflow steps, exclusion, concurrent ownership, retry/recovery coordination,
+  closure progression, or durable state progression, AI MUST treat this as a
+  Workflow/execution-architecture modeling gap rather than adding the mechanism
+  to Skill Logic.
+- AI MUST surface the required guarantee so the authoritative Workflow,
+  Execution Model, or Failure Model can supply it.
+
+Relationship to Defensive Complexity:
+- These rules specialize the Defensive Complexity and Failure Model Rules for
+  Skill implementation.
+- They do not weaken explicit runtime requirements; they place responsibility
+  for satisfying those requirements in the correct execution layer.
+- A lower-level Skill instruction, generated procedure, or implementation note
+  cannot authorize local execution-control machinery when the surrounding
+  architecture owns that concern.
+
+
+----------------------------------------------------------------------
+Hash Prohibition Rules
+----------------------------------------------------------------------
+
+These rules are a hard constraint for AI-authored implementation. They exist
+because hash-based techniques are a strong implementation prior and can hide
+missing domain or control models behind locally convenient mechanisms.
+
+Default prohibition:
+- AI MUST NOT originate or select a hash, checksum, digest, fingerprint,
+  content-derived identifier, or hash-based comparison as an implementation
+  or design mechanism. This prohibition applies to application code,
+  middleware core logic, infrastructure code, and library internals.
+- Hash-based mechanisms are externally justified, permission-based exceptions,
+  not ordinary AI implementation choices.
+- A hash mechanism MUST be required by an authoritative external source such as
+  an approved architecture or specification, a protocol/format contract, an
+  approved security design, or an explicit human instruction. AI reasoning
+  alone is not authority to introduce one.
+- When no explicit permission or independently valid requirement exists, AI
+  MUST proceed without the hash-based mechanism and use the explicit domain or
+  control model instead.
+
+Semantic substitution prohibition:
+- A hash MUST NOT substitute for explicit identity, state, causality, lifecycle,
+  ownership, version, cycle management, deduplication semantics, or other
+  control data.
+- If a proposed hash is being used to answer questions such as "which entity?",
+  "which execution?", "has this state been visited?", "is this the same
+  business object?", "what caused this?", or "is this duplicate?", first model
+  the corresponding semantic information explicitly.
+- In domain logic, business identity MUST come from the domain model rather
+  than content equality.
+- In middleware core logic, execution and control identity MUST come from the
+  architecture's explicit control model rather than content-derived identity.
+
+Permission and justification:
+- A hash-based mechanism MAY be implemented only when it is explicitly required
+  by an authoritative functional requirement, protocol, architecture,
+  security/integrity contract, content-addressed-storage contract, approved
+  Failure Model that already selects the mechanism, or explicit human approval.
+- An AI-authored or AI-derived lower-level specification does not count as
+  external authority merely because it contains the word hash.
+- Before implementation, the justification MUST identify:
+  1. the concrete requirement or in-scope failure,
+  2. why explicit domain/control data is insufficient or inapplicable,
+  3. why hashing is the simplest adequate mechanism,
+  4. exactly what data is hashed and what the resulting value means.
+- Existing lower-level code, a task note, implementation sketch, generated
+  specification, or subordinate design that already mentions a hash is NOT by
+  itself sufficient justification. The use MUST still be checked against this
+  higher-level rule and the authoritative domain, Execution, and Failure Models.
+- If that check reveals that the hash is compensating for missing control data
+  or an unclear model, AI MUST stop the hash-based implementation and surface
+  the modeling gap.
+
+Externally justified exception domains:
+- Cryptographic verification and signatures.
+- Integrity checks explicitly required by a protocol or storage contract.
+- Checksums whose specified purpose is transmission/storage corruption
+  detection.
+- Content-addressed storage where content identity is the defined abstraction.
+- External protocols or interoperable formats that explicitly require a
+  particular digest.
+
+These exceptions permit only the hash required for that purpose. They do not
+permit the resulting value to leak into unrelated domain identity or control
+semantics.
+
+Review requirement:
+- Any newly introduced hash-based mechanism in application or middleware code
+  MUST be treated as a review trigger.
+- Review MUST verify the permission and justification above rather than merely
+  checking that the hash implementation is technically correct.
+- If justification is absent, ambiguous, or based only on defensive intuition,
+  the hash-based mechanism MUST be removed and the underlying model revisited.
+- Passing tests, local correctness, or apparent robustness does not override
+  this rule.
+
+Relationship to Defensive Complexity:
+- These rules strengthen, rather than replace, the Defensive Complexity and
+  Failure Model Rules.
+- The normal traceability remains:
+    Failure Model -> Required Robustness -> Mechanism
+- For hash-based mechanisms, satisfying that traceability is necessary but not
+  sufficient: the explicit permission and semantic-substitution checks in this
+  section also apply.
 
 Skill authoring:
 
