@@ -437,3 +437,8 @@ All agents are expected to navigate the core rules
 using this map as their guide.
 
 END OF AGENTS.md
+
+
+## Collection and semi-structured data modeling
+
+When the project provides Goldenport Record/CNCF-style data modeling, follow [collection-and-semi-structured-data.md](collection-and-semi-structured-data.md). Preserve ordered property data; do not collapse semi-structured data into Map for convenience.
