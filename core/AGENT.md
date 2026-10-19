@@ -96,7 +96,16 @@ Agents MUST classify an execution request before invoking a command:
   failure, and stops for a correctly privileged rerun.
 - Exact Cozy or Dox CLI: registered `cozy_command_runner`, with first-attempt
   scoped escalation.
-- Reviewed one-shot project script or launcher: registered
+- Installed `sm-workflow` command: the owning parent chat executes directly,
+  with `sandbox_permissions: "require_escalated"` on the first attempt and a
+  narrow approval prefix for the exact absolute installed executable and,
+  where useful, its fixed host/operation arguments. This is an explicit
+  exception to runtime-runner delegation; do not create a command/script runner
+  intake or subagent for this invocation. Existing workflow selection, effect
+  authority, semantic delegation and independent review remain unchanged.
+  Escalation denial stops the call; do not broaden the prefix or replay an
+  uncertain effect. This exception does not cover independent top-level SBT.
+- Other reviewed one-shot project script or launcher: registered
   `cncf_runtime_runner`.
 - Long-lived script or launcher with readiness or session ownership: registered
   `cncf_runtime_session_runner`.
@@ -106,8 +115,10 @@ Agents MUST classify an execution request before invoking a command:
   editing: parent agent, except an applicable workflow may separately assign an
   admitted editing worker.
 
-If the required runner is unavailable or scoped escalation is denied, stop and
-report; never fall back to direct execution or another command group.
+For runner-routed groups, if the required runner is unavailable or scoped
+escalation is denied, stop and report; never fall back to direct execution or
+another command group. The installed `sm-workflow` route above is parent-owned
+from the outset, not a runner-failure fallback.
 
 
 ## Executable Specification Policy
