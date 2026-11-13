@@ -12,6 +12,13 @@ public-facing `.dox` documents or generating `.dox` scaffold files.
 These rules exist because SmartDox Dox is not Markdown. Markdown-like heading
 habits can create syntactically ambiguous or invalid SmartDox documents.
 
+# TECHNICAL EXPLANATIONS
+
+When authoring technical explanations in SmartDox, also follow
+[Technical Writing Rules](technical-writing.md). It governs explanation structure,
+logic-tree relationships, prose, claims, evidence, figures, tables and lists.
+The syntax and metadata requirements in this document remain applicable.
+
 # SECTION TITLE TERMINATION
 
 A SmartDox section title is terminated by a blank line. This is intentional:

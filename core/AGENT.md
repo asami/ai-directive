@@ -270,6 +270,23 @@ which document governs a given question or decision.
 
 ---
 
+### Technical Writing Rules
+
+- **[technical-writing.md](technical-writing.md)**
+  The shared authoring rules for specifications, designs, technical guides,
+  references, procedures, articles, Content Cores and technical summaries/scripts.
+
+  Governs:
+  - purpose, definitions, explanation structure and logic-tree relationships
+  - prose, claims, evidence, terminology, figures, tables and lists
+  - Core-level reasoning before localized prose and derived manuscripts
+
+  Read this before authoring or revising technical explanations. Project-local
+  rules supply glossary identities, language conventions and publication details.
+  SmartDox syntax is governed by the authoring rules below.
+
+---
+
 ### SmartDox Authoring Rules
 
 - **smartdox-authoring.md**
@@ -294,6 +311,10 @@ which document governs a given question or decision.
   - Code-level contracts and invariants
   - AI-assisted change constraints
   - Context handling, logging, and defect semantics
+  - [Collection representation by cardinality and meaning](RULE.md#collection-representation-by-cardinality-and-meaning):
+    standard Vector/NonEmptyVector model contracts, Record and internal input capabilities
+  - [Null handling at I/O and foreign API boundaries](RULE.md#null-handling-at-io-and-foreign-api-boundaries):
+    normal logic uses typed values/absence, without native null or repeated null guards
 
   RULE.md defines **what MUST be obeyed** at the implementation level.
   It does not define process or progress semantics.

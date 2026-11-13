@@ -61,6 +61,19 @@ Rationale:
 - Local publication of a release coordinate bypasses the repository-to-cache
   route that downstream projects must actually use.
 
+# Technical Document Authoring
+
+Agents authoring or revising technical explanations MUST read and follow
+[Technical Writing Rules](technical-writing.md), located in the shared
+`ai/directive/core/` directory. These rules apply to technical guides as well as
+specifications, designs, references, procedures, articles, Content Cores and
+technical summaries/scripts across projects.
+
+Project-specific glossary, language, article-format and publication rules supplement
+that shared authority. Keep reusable writing rules in `technical-writing.md` and
+project-specific additions in the project's own rule documents. SmartDox syntax
+remains governed by [SmartDox Authoring Rules](smartdox-authoring.md).
+
 # AI Directive Submodule Operation
 
 `ai-directive` is an external, versioned contract when mounted in a consuming
@@ -596,9 +609,78 @@ Do not mix these responsibilities in a single API.
 
 ## Collection idiom
 
-Collection/Group types MUST provide:
+Collection/Group types with a natural empty value MUST provide:
 - a canonical empty value
 - a zero-arg apply() for binary compatibility
+
+Nonempty types and types with required members MUST NOT fabricate an empty
+value to satisfy this idiom.
+
+## Collection Representation by Cardinality and Meaning
+
+In Scala, select the standard representation from cardinality and semantic
+requirements, rather than leaving AI or callers to choose among interchangeable
+collection implementations. This governs domain fields, public business inputs
+and outputs, generated models and materialized persistence-boundary values.
+
+| Meaning | Standard type |
+| --- | --- |
+| Required single value (`1`) | `A` |
+| Optional single value (`0..1`) | `Option[A]` |
+| Ordered multiple values (`0..*`) | `Vector[A]` |
+| Ordered nonempty values (`1..*`) | `cats.data.NonEmptyVector[A]` in Goldenport/CNCF |
+| Semi-structured named attributes | Goldenport `Record` in Goldenport/CNCF |
+| Key/value association or lookup index | `scala.collection.immutable.Map[K, V]` |
+| Set semantics / uniqueness | `scala.collection.immutable.Set[A]` |
+
+Cardinality alone does not imply uniqueness, key identity or unordered data.
+Vector preserves order and duplicates. Additional bounded multiplicities retain
+their model constraints through the existing admission mechanism. Do not add a
+dependency on Goldenport/Cats to unrelated projects solely to implement this
+table; use their explicitly adopted equivalent semantic types.
+
+### Internal Input Capability versus Standard Representation
+
+- An internal algorithm MAY accept `scala.collection.immutable.IndexedSeq[A]`
+  when it needs efficient indexed access, or immutable Seq/Iterable when its
+  requirements are weaker. An explicitly single-pass input may use IterableOnce.
+  Do not convert inputs already providing the required capability needlessly.
+- Public business inputs do not become abstract Seq merely because they are
+  inputs. Their model representation follows the table, as do stored/returned
+  values. Use immutable abstractions when immutability is required.
+- IndexedSeq admits Vector and ArraySeq, not List; it does not guarantee
+  Vector's append/update performance. LinearSeq is exceptional, for meaningful
+  head/tail access requirements. List is exceptional, for cons/stack/recursive
+  semantics or a required external API. Neither is the default domain sequence.
+- In Goldenport/CNCF, use Record for hierarchical properties/metadata and Map
+  for genuine key associations/indexes. Do not reconstruct ordered properties
+  from Map iteration. Derived lookup indexes do not own property order.
+
+### Database, Generation and Migration
+
+- Preserve existing search result/effect containers and page metadata; standard
+  materialized result bodies are Vector. Zero matches is an empty Vector.
+  Optional lookup uses Option; required lookup retains its existing failure
+  contract. Do not turn database errors into absence or select an arbitrary
+  first result when a single-result contract is violated.
+- Vector retains retrieved order; query ordering establishes stable database
+  order. Large results require paging or explicitly resource-managed streaming,
+  not a LinearSeq/LazyList standing in for a cursor lifecycle.
+- Reconstruct NonEmptyVector only where the declared model requires nonempty
+  values. Handle invalid empty input at the owning boundary using the existing
+  failure model, rather than repeated checks in normal logic.
+- Generate ordinary multiple-value fields as Vector, not List/Seq. Reassess
+  existing declarations and migrate the model, generator, affected callers and
+  executable specifications together. An old declaration alone is not a reason
+  to add List restoration or compatibility conversion. External API conversions
+  belong at their adapters; do not hand-edit generated sources.
+- A codec accepting Seq does not make Seq the canonical domain representation.
+  Avoid needless representation changes and repeated List tail appends during
+  construction; use an appropriate builder when accumulating results.
+- Verify the declared behavior and generated contracts. Do not add blanket
+  runtime type assertions, List-token bans, comparison ledgers or speculative
+  benchmark gates. List can be efficient for its intended operations; this is
+  a semantic default, not a claim that Vector is fastest for every workload.
 
 ---
 
@@ -1143,6 +1225,59 @@ They are intentionally abstract and do not reference concrete classes.
 - When context is unavailable, deferred resolution should be preferred
 
 
+
+# Null Handling at I/O and Foreign API Boundaries
+
+## Principle
+
+Native `null` MUST NOT enter normal semantic or business logic. It MUST NOT
+serve as an internal value, missing-value marker, return result, initialization
+placeholder, or control signal. This applies to nested attributes and collection
+elements as well as top-level values. Wrapping it in `Some(null)` or another
+container does not satisfy this rule.
+
+## Input and Output Responsibilities
+
+- Handle nullable input at the I/O or foreign API boundary, before invoking
+  normal logic. Convert it according to the declared contract into absence,
+  an existing typed value/instruction, or an appropriate failure.
+- Represent optional internal values with `Option` or the project's equivalent
+  explicit type. Use existing typed commands for operations such as clearing
+  a stored value; do not pass null as the instruction.
+- If an external API requires native null, materialize it only in the output
+  adapter that invokes that API. Do not transport native null through internal
+  layers in preparation for eventual output.
+- Attribute omission is one possible input normalization, as in Record.
+  It is not a universal rule for every input shape: dropping an array element
+  changes its position, and an omitted patch field may mean no change. Follow
+  the owning data/update contract rather than inventing a generic null filter.
+- Empty objects, empty collections, empty Strings, false and zero MUST NOT be
+  treated as null merely to simplify conversion.
+
+## Typed External Values
+
+A typed syntax value such as `Json.Null` is distinct from a native null
+reference. It may be preserved when the declared value is a JSON document.
+Before interpreting it as an application value, map it to the application's
+declared value/absence/failure semantics. Do not use typed JSON null as a
+substitute for an internal missing-value or control marker.
+
+## Implementation and Review
+
+- Normal logic relies on this boundary contract. Do not add routine null
+  guards, fallback values, or repeated normalization to every internal method.
+- Unexpected native null inside normal logic is a defect in construction or
+  boundary handling. Fix that source rather than silently recovering at each
+  downstream use. This rule does not require new runtime assertions everywhere.
+- Use the existing failure model for invalid external input; in CNCF/Goldenport,
+  expected input failures use `Consequence`. Do not reclassify invalid user
+  input as an internal defect.
+- Review affected paths for correct boundary placement and typed internal
+  values. Test the actual conversion and observable behavior, not source-text
+  bans on the word `null`. Boundary implementations and their input fixtures
+  may legitimately contain it.
+- Record normalization details, SQL NULL mappings and patch instructions belong
+  to their owning project contracts. Keep those details out of the shared rule.
 
 # Error Handling and Result Conventions
 
@@ -2401,15 +2536,16 @@ def findActiveSession(user: User): Consequence[Session]
 
 ### Error Model
 
-- Return a collection (`List`, `Seq`, etc.) or `Consequence[Seq[T]]`
+- Return `Vector[T]` or `Consequence[Vector[T]]` for ordinary materialized
+  results; preserve an existing SearchResult/effect wrapper and its metadata
 - Empty result is normal
 - Must NOT throw exceptions for “not found”
 
 ### Example
 
-def searchUsers(query: Query): Consequence[List[User]]
+def searchUsers(query: Query): Consequence[Vector[User]]
 
-def searchLogs(criteria: Criteria): IO[Seq[LogEntry]]
+def searchLogs(criteria: Criteria): IO[Vector[LogEntry]]
 
 ### Design Note
 

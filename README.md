@@ -16,6 +16,15 @@ This repository is typically mounted into a project as a Git submodule at:
 
 and treated as an external, versioned contract.
 
+## Technical Writing
+
+[Technical Writing Rules](core/technical-writing.md) defines the shared authoring
+rules for technical guides, specifications, designs, references, procedures,
+articles, Content Cores and technical summaries/scripts. It covers explanation
+structure, logic-tree relationships, prose, evidence and figures/tables/lists.
+Project rules supply site-specific glossary, language and publication conventions.
+[SmartDox Authoring Rules](core/smartdox-authoring.md) supplies Dox syntax rules.
+
 ## Project Setup
 
 Use the setup guide when adopting this directive in a project:
