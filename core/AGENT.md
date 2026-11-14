@@ -298,6 +298,22 @@ which document governs a given question or decision.
 
 ---
 
+### Technical Document Structure Templates
+
+- **[technical-writing-templates.md](technical-writing-templates.md)**
+  Named, selectable structures for explanatory technical documents, governed by
+  Technical Writing Rules.
+
+  Governs:
+  - template names, stable IDs, selection and initial choice
+  - background-first and definition-first explanatory structures
+  - section roles and their relationship to the shared writing principles
+
+  Use this catalog to select an explanatory structure. Technical Writing Rules
+  remain the authority for prose, logic, evidence, figures, tables and lists.
+
+---
+
 ### SmartDox Authoring Rules
 
 - **smartdox-authoring.md**

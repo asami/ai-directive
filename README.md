@@ -23,6 +23,11 @@ rules for technical guides, specifications, designs, references, procedures,
 articles, Content Cores and technical summaries/scripts. It covers explanation
 structure, logic-tree relationships, prose, evidence and figures/tables/lists.
 Project rules supply site-specific glossary, language and publication conventions.
+[Technical Document Structure Templates](core/technical-writing-templates.md)
+provides named structures for explanatory documents: Background First
+(背景導入型, `background-first`) and Definition First
+(定義・課題対応型, `definition-first`). Select a structure by its Japanese name,
+English name or ID while applying the shared writing rules.
 [SmartDox Authoring Rules](core/smartdox-authoring.md) supplies Dox syntax rules.
 
 ## Project Setup
