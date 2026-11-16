@@ -61,6 +61,10 @@ Rationale:
 - Local publication of a release coordinate bypasses the repository-to-cache
   route that downstream projects must actually use.
 
+## Language of ai-directive rules
+
+Write shared ai-directive rules in English by default. Use Japanese where the original language matters, such as canonical Japanese names, literal identifiers, quotations, and examples of Japanese usage. This convention governs the rules themselves. Each project sets the languages of the documents it produces.
+
 # Technical Document Authoring
 
 Agents authoring or revising technical explanations MUST read and follow

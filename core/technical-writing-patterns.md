@@ -4,69 +4,77 @@ Status: Normative through [Technical Writing Rules](technical-writing.md)
 
 Rule map: [Core Rule Map](AGENT.md#core-rule-map)
 
-## 適用範囲と役割
+<a id="適用範囲と役割"></a>
+## Scope and purpose
 
-このカタログは、技術文書の節・小節などの説明単位について、ロジックツリーで選択し、本文へ展開する説明パターンを定義する。[文書構成テンプレート](technical-writing-templates.md)は文書全体の章立てを選び、このカタログは各単位の説明の組み立てを選ぶ。主張を支える根拠・因果・構成などの論理関係は、[共通ルール](technical-writing.md)に従って具体的な内容で記述する。
+Use this catalog to choose how a section or subsection develops its explanation in the logic tree and in the text. The [document structure templates](technical-writing-templates.md) organize the document as a whole. Explain the evidence, causes, and structural relationships that support each claim using the subject matter, following the [shared rules](technical-writing.md).
 
-共通の骨格は「必要な背景・課題・目的などで問いを共有する → 主張・答えを示す → それを支える説明へ分解する」とする。主張は、その単位が読者へ伝える中心的な答えであり、定義・判断・方針・仕組みの要点などを含む。背景・課題・目的を毎回すべて書く必要はなく、上位で共有した文脈を使う。
+Establish the question through the context, problem, or purpose the reader needs. Give the central answer, then develop the explanation that supports it. The answer may be a definition, judgment, policy, or account of how something works. Reuse context established at a higher level.
 
-## パターンの選択
+<a id="パターンの選択"></a>
+## Choosing a pattern
 
-各節・小節では、答える問いに応じて主となるパターンを一つ選ぶ。日本語名・英語名・IDのいずれでも指定できる。次の表は、問いに合うパターンと、主張を支える説明の展開を選ぶためのものである。
+Choose one principal pattern for each section or subsection according to the question it answers. Authors can specify its Japanese name, English name, or ID.
 
-| 日本語名 | 英語名 | ID | 答える問い | 説明の展開 |
-| --- | --- | --- | --- | --- |
-| 定義型 | Definition | `definition` | それは何か。 | 扱う文脈 → 定義 → 性質・範囲・境界。 |
-| 必要性型 | Rationale | `rationale` | なぜ必要か。 | 目的・現状 → 必要なこと → その理由・成立条件。 |
-| 課題対応型 | Problem–Solution | `problem-solution` | 課題にどう対応するか。 | 課題 → 対応方針 → 原因と対策の関係 → 得られる効果・条件。 |
-| 構成分解型 | Decomposition | `decomposition` | 何から成るか。 | 全体の目的 → 構成の全体像 → 要素ごとの役割・関係。 |
-| 仕組み型 | Mechanism | `mechanism` | どう働くか。 | 実現したいこと → 仕組みの要点 → 作用・因果関係 → 結果・条件。 |
-| 比較選択型 | Comparison | `comparison` | 何を選ぶか。 | 判断目的 → 選択方針・結論 → 共通の比較軸と根拠 → 選択条件。 |
-| 実施方法型 | Procedure | `procedure` | どう実施するか。 | 到達目標 → 方法の全体像 → 前提・手順 → 結果の確認。 |
-| 具体例型 | Worked Example | `worked-example` | 実際にはどうなるか。 | 例で示す論点 → 事例の要点 → 条件・動作・結果 → 一般的な説明との対応。 |
+| Japanese name | English name | ID | Reader’s question | Development | What the reader can do afterward |
+| --- | --- | --- | --- | --- | --- |
+| 定義型 | Definition | `definition` | What is it? | Establish the context, define the subject, then describe its properties, scope, and boundaries. | Use the defining properties to explain why a case falls inside or outside the stated scope. |
+| 必要性型 | Rationale | `rationale` | Why is it needed? | Give the purpose and current situation, identify the need, then explain the reasons and conditions. | Identify the goal at stake and explain why the current situation creates a need under the stated conditions. |
+| 課題対応型 | Problem–Solution | `problem-solution` | How can we address the problem? | Identify the problem and response, connect the remedy to the cause, then give the effects and conditions. | Connect the response to the cause and identify a result that would show whether it addressed the problem. |
+| 構成分解型 | Decomposition | `decomposition` | What are its parts? | Give the purpose and overall structure, then explain each part’s role and relationships. | Identify each part’s responsibility and explain how the parts connect to serve the whole. |
+| 仕組み型 | Mechanism | `mechanism` | How does it work? | Identify the goal and key mechanism, trace the causal steps, then give the results and conditions. | Trace how an action produces the result and identify the conditions on which that causal link depends. |
+| 比較選択型 | Comparison | `comparison` | How do the options compare? If a choice is needed, which option fits which conditions? | State the main finding, then compare the options on common criteria and give the supporting evidence. When the section calls for a decision, explain the conditions for choosing. | Explain the relevant similarities and differences and why they matter. For a decision, identify which option fits the stated conditions and why. |
+| 実施方法型 | Procedure | `procedure` | How do we do it? | State the goal, outline the method, give prerequisites and steps, and verify the result. | Recognize when the prerequisites hold, carry out the steps, and check the outcome. |
+| 具体例型 | Worked Example | `worked-example` | What happens in practice? | Identify the point and summarize the case, trace conditions, behavior, and results, then relate them to the general explanation. | Trace the case from its starting conditions to its result and identify the general point it illustrates. |
 
-必要性型は対象を必要とする理由、課題対応型は課題に対する具体的な対応を中心にする。構成分解型は要素と関係、仕組み型は作用と結果の因果を中心にする。比較だけを行う節では、比較選択型の中心的な答えとして共通点・相違点を示し、その根拠と判断条件へ展開する。
+Choose Rationale to explain a need and Problem–Solution to develop a specific response. Decomposition explains parts and relationships. Mechanism explains how an action produces a result. For a comparison without a selection, give the similarities and differences as the central answer, followed by the evidence and the conditions relevant to judgment.
 
-パターンは説明単位へ再帰的に適用し、親と子で異なるパターンを選べる。例えば、構成分解型の節の下で、各要素を定義型や仕組み型の小節として説明できる。一つの節に独立した問いと主張が複数ある場合は、論点に応じて小節へ分ける。短い段落では、必要な役割を一文にまとめてもよい。
+Apply patterns recursively. A Decomposition section may have Definition or Mechanism subsections for individual parts. Split independent questions and claims into subsections where appropriate. A short paragraph can cover several explanatory roles in one sentence. Open the parent section with its answer and explain how its supporting points fit together. Give each child a distinct question that develops one of those points, using the context already established by the parent.
 
-## Coreとロジックツリーでの表現
+For example, a section on order consistency might open with “An order update must satisfy the rules for the order as a whole and the conditions for committing the update.” One subsection answers “What rules must the proposed order satisfy?” A second answers “When can that validated update be committed?” Together they explain how a valid proposal becomes a committed change.
 
-本文を書く前に、各節・小節について、次の内容を対応付ける。
+<a id="coreとロジックツリーでの表現"></a>
+## Representation in the Core and logic tree
 
-- **説明パターン**：このカタログで定義したパターン名・ID。
-- **問い**：その単位で読者が理解・判断・実行したいこと。
-- **背景・課題・目的**：問いと主張を理解するために必要な文脈。
-- **主張**：問いに対する中心的な答え。
-- **ブレイクダウン**：選択したパターンに沿う説明と、その説明が主張を支える関係。
+Before drafting, relate the following for each section and subsection:
 
-ロジックツリーの確認用HTML等では、各節・小節に説明パターン、問い、主張を表示する。その下に、背景・課題・目的、定義、根拠、構成要素、作用、条件、手順、結果など、選択したパターンの各部分の役割と具体的な内容を示す。ブレイクダウンは主張の下位の説明として対応付け、読む順序と論理的な支え方をそれぞれ確認できるようにする。
+- **Pattern.** The catalog name or ID.
+- **Question.** What the reader wants to understand, decide, or do.
+- **Context.** The background, problem, or purpose needed to understand the question and claim.
+- **Claim.** The central answer.
+- **Supporting explanation.** The parts called for by the chosen pattern and how each supports the claim.
 
-説明上の役割、説明パターン、論理関係は区別する。例えば「構成」という節の役割と「構成分解型」という説明パターンは別の情報である。パターン名を付けても、親子の説明がどうつながるかを示したことにはならない。既存の構造DSLにある `mapping` や `causal-chain` などの論理パターンを、このカタログのパターン名で置き換えない。
+In an HTML logic-tree review or equivalent view, show the pattern, question, and claim for each unit. Beneath the claim, show the roles and actual content of its supporting parts, such as definitions, evidence, components, actions, conditions, steps, and results. Make reading order and logical support independently inspectable.
 
-保持には利用するCore・Document・確認表示の正規の仕組みを使い、未定義のフィールドや列挙値を追加しない。形式が説明パターンの選択を保持できない場合は、節・小節の既存IDに対応付けた別の執筆用資料で管理し、対応する確認用表示を用意する。生成器が表示できる項目と、執筆ルールで要求する表示は区別し、未対応の表示を実装済みとして扱わない。
+Distinguish a section’s role (such as “structure”), its explanatory pattern (such as Decomposition), and its logical relationships. A pattern name alone gives no account of how a child supports its parent. Preserve the structure DSL’s own logical patterns, including `mapping` and `causal-chain`.
 
-確認用表示の例を示す。
+Use the supported Core, Document, and review-view mechanisms without adding undefined fields or enumeration values. Where the format cannot store a selection, record it in separate authoring material keyed to existing section IDs and provide a corresponding review view. Distinguish what the generator currently displays from what the rules require.
 
-- 節の見出し：CNCFの自動トレースを分析につなげる
-- 説明パターン：仕組み型
-- 問い：アプリケーション側に観測用の個別実装を追加せず、どう分析を可能にするか。
-- 背景・課題：個々のアプリケーションで観測用の記録を実装すると、取得項目や形式をそろえる作業が分散する。
-- 主張：CNCFの自動トレースを共通の観測モデルへ整えることで、各種分析に使える記録を用意する。
-- 作用：共通基盤で記録を取得し、実行・呼び出し・計測値を対応付けてモデル化する。
-- 結果・条件：モデルに対して分析方法を再利用できる。分析ごとに必要な記録と計測範囲をそろえる。
+A review view might contain the following entries:
 
-この例は確認用の執筆情報であり、本文にパターン名や「問い」「主張」などのラベルをそのまま掲載する指示ではない。
+- **Heading.** Using CNCF automatic traces for analysis.
+- **Pattern.** Mechanism.
+- **Question.** How can applications support analysis without implementing individual observation logic?
+- **Context.** Application-specific recording distributes the work of standardizing fields and formats.
+- **Claim.** Converting CNCF automatic traces into a common observed model provides records for several kinds of analysis.
+- **Mechanism.** Shared infrastructure captures records and relates executions, calls, and measurements in the model.
+- **Result and conditions.** Analysts can reuse methods against the model when the records and measurement scope required by each analysis are available.
 
-## 本文への展開と確認
+These labels belong to the authoring review. Use the actual technical content in the publication. The same Core entries could yield this passage:
 
-本文は選択したパターンに沿って、背景・課題・目的から主張へつなぎ、主張を支える説明へ展開する。パターン名や役割名は確認用情報として扱い、読者向けの見出しと文章には対象の具体的な内容を使う。技術的な内容として必要な役割名を使うことは妨げない。
+> CNCF captures traces in shared infrastructure, so each application can supply data for analysis without implementing its own recording logic. The observed model links an execution to its calls and each call to its measurements. Analysts can apply the same method across applications when their traces contain the records the method needs and cover the operations it measures.
 
-執筆後は、各節・小節で次の点を確認する。
+<a id="本文への展開と確認"></a>
+## Drafting and verification
 
-- 問いに対する主張があり、冒頭の短いまとまりで論点と主張を理解できる。
-- 本文の展開が選択したパターンに対応し、説明と子節が主張を支えている。
-- 根拠・因果・条件などのつながりを具体的な内容で説明できる。
-- 上位で共有した背景の反復や、主張に関係しない連想的な説明が増えていない。
-- ロジックツリーで確認した内容と本文が対応し、確認用の執筆情報が本文へ混入していない。
+Follow the pattern from the necessary context to the claim and its supporting explanation. Choose reader-facing headings and prose that describe the subject. Use a role name in the text when it carries technical meaning.
 
-説明を変更して問い・主張・パターンが変わる場合は、Core、執筆用資料、確認用ツリーと本文の対応を更新する。パターンを追加するときは、このカタログに問い、主張の置き方、説明の展開と選択条件を定義する。
+Check each section and subsection after drafting:
+
+- The opening passage identifies the issue and answers the reader’s question.
+- The reader can meet the selected pattern’s criterion in the table, and its explanation and subsections support the claim.
+- The subject matter explains the evidence, causal relationships, and conditions.
+- The passage builds on earlier context and contains only material relevant to the claim.
+- The published text matches the reviewed tree and keeps authoring instructions in the authoring material.
+
+If the question, claim, or pattern changes, update the correspondence between the Core, authoring material, review tree, and text. For each new catalog pattern, define its question, where the claim appears, how the explanation develops, when to use it, and what the reader should be able to do afterward.

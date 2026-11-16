@@ -4,152 +4,138 @@ Status: Normative through [RULE.md](RULE.md)
 
 Rule map: [Core Rule Map](AGENT.md#core-rule-map)
 
-## 適用範囲と役割
+<a id="適用範囲と役割"></a>
+## Scope and authority
 
-この文書は、プロジェクト共通の技術文書の執筆ルールを定める。仕様書、設計書、Technical Guide（技術解説）、リファレンス、手順書、記事と、それらから作る要約・スライド・動画台本の技術説明に適用する。Content Coreと各言語のDocumentにも、主張・説明構造・根拠に関する規則を適用する。ジャーナルでは記録の形式を保ち、技術的な説明・主張にこのルールを適用する。
+Apply these shared rules to technical explanations in specifications, designs, technical guides, references, procedures, articles, and derived summaries, slides, and video scripts. Apply the rules for claims, structure, and evidence to the Content Core and each localized Document. In journals, retain the record format and apply these rules to technical explanations and claims.
 
-説明の組み立て、文体、主張と根拠、図表・箇条書きの扱いは、この文書を共通の正本とする。プロジェクト固有の用語集、表記、記事構成、公開方法は各プロジェクトの規則で補う。共通ルールの変更はこの正本へ反映し、プロジェクト側では参照と固有の補足を管理する。
+Maintain shared rules for reasoning, style, evidence, figures, tables, and lists here. Projects reference them and supply their own glossaries, notation, article structures, and publication practices. Follow [SmartDox Authoring Rules](smartdox-authoring.md) for syntax and [Document Lifecycle](document-lifecycle.md) for the document’s role. Follow the target project’s authorities for emphasis, supported languages, spelling, and terminology. Site-specific conventions apply within their own scope.
 
-SmartDoxの構文は[SmartDox Authoring Rules](smartdox-authoring.md)に従う。文書の位置付けは[Document Lifecycle](document-lifecycle.md)に従う。強調の役割、対応言語とその表記、用語の意味と正規表記は、対象プロジェクトが定める正本に従う。この文書は特定サイトの用語集や記事形式を他のプロジェクトへ適用しない。
+<a id="説明の構成"></a>
+## Structuring an explanation
 
-## 説明の構成
+**Establish the issue, state the claim, then develop its supporting points from the top down.** Open with enough context, problem, or purpose for the reader to understand the question and answer. Break the claim into its principal points or components, then develop the evidence, conditions, mechanisms, and examples. The upper levels should give an overview from which readers can choose the detail they need.
 
-**背景・課題・目的などで論点を示し、主張を述べ、その内容をトップダウンに分解する。** 冒頭では、読者がその主張を理解するために必要な状況や問いを簡潔に示し、何を伝えるかへつなぐ。続いて、その主張を説明する主要な論点・構成要素を並べ、根拠・条件・仕組み・具体例へ展開する。上位の説明だけでも概要を理解でき、必要な論点を選んで詳細へ進める構成にする。
+Apply this structure recursively to the document, chapters, sections, subsections, items, and paragraphs. Each child answers an identifiable question and makes a claim before developing the detail. Siblings address the same parent question. Attach conditions to the claims they qualify. Reuse context established earlier. When readers already share it, a definition can open directly with its main point. Keep both the issue and the claim within the opening passage.
 
-**このトップダウン構造を、文書全体、章、節、小節、項目、段落へ再帰的に適用する。** 各単位で「背景・課題・目的など → 主張 → そのブレイクダウン」のつながりを持たせる。子の単位も、それが答える問いと主張を明らかにしてから詳細へ進む。同じ階層では同じ親の問いに答え、主張が成り立つ条件を対応する位置に示す。
+1. **Explain why and what before how.** Identify the purpose or need, the subject, its parts, and its scope. Say what readers will understand, decide, or do, then introduce methods and procedures at a level suited to their knowledge.
 
-背景・課題・目的は、その単位の主張を理解するために必要なものを選び、上位で共有済みの説明を繰り返さない。定義など、文脈が共有されている箇所では直接その要点を示してよい。背景の説明を長く続けて主張を終盤まで保留せず、冒頭の短いまとまりで論点と主張を把握できるようにする。
+2. **Define the concept and show the whole before introducing its parts.** When discussing several aspects, establish their relationship to the common concept. Define unfamiliar terms before relying on them.
 
-1. **目的・必要性（Why）と、対象・内容（What）を明らかにする。** なぜその概念や仕組みが必要なのか、何を扱い、何から成り、どの範囲に作用するのかを説明する。読者が何を理解・判断・実行するための文書かを示し、その理解を土台に方法や手順（How）へ進む。説明の粒度は想定読者の前提知識に合わせる。
+3. **Match the hierarchy and order of headings, sections, and paragraphs to the reasoning.** Give each section a distinct role. Establish the premises needed by the next section and make the argument traceable through the headings.
 
-2. **概念の定義と全体像を示してから、構成要素や詳細を説明する。** 一つの概念を複数の側面に分けて説明するときは、その共通概念と各側面の関係を先に示す。未説明の用語を、その用語自身の説明の前提にしない。
+   Put the subject at the root, its main points below it, and evidence, details, and examples under the points they support. Each sentence, figure, table, and list should answer an identifiable parent question or support a claim. When a list previews later explanations, use corresponding names and order.
 
-3. **見出し、節、段落の階層と順序を、論理構造に一致させる。** 各節に固有の役割を持たせ、前節の説明を次節の前提につなぐ。見出しを追うことで、主題と説明の流れを把握できるようにする。
+   Develop the relevant why (purpose, reason, premise) and what (subject, definition, structure, role) in the body of each unit. An opening conclusion followed only by details or steps leaves these connections unexplained. Introduce the question and its supporting points, then place procedures under the point that calls for them. Execution order alone cannot supply the reasoning of the whole document.
 
-   説明は、主題を親、その主題を説明する主要な論点を子、各論点を支える根拠・詳細・具体例をさらに下の子とする木構造で組み立てる。同じ階層の項目は、同じ親の問いに答える論点としてそろえる。各節が上位のどの論点を説明しているかを明確にする。
+4. **Place supporting detail where it serves the main point.** Give background, derived concepts, and implementation details the prominence and depth their purpose requires.
 
-   一つ一つの文、図表、箇条書きが、上位のどの問いや主張を説明するかを明確にする。見出しの語から連想する情報を並べるのではなく、その単位の主張に必要な説明を選ぶ。主要な論点を箇条書きで示してから個別に説明するときは、項目の名称と順序を対応させる。
+5. **Make the document usable by skimming.** The lead, headings, figures, tables, lists, and summary together should convey the purpose, scope, concepts, mechanisms, decision conditions, and conclusion. Use the body to explain the evidence and details. Check that skimming preserves the argument and its conditions.
 
-   各単位で必要なWhy（目的・理由・前提）とWhat（対象・定義・構成・役割）を、本文の論点として説明する。冒頭に結論や短い導入を置いただけで済ませず、その下に必要性や対象の説明を展開し、詳細がどの論点を支えるかを示す。結論に続いて細部や手順を列挙するだけの構成にしない。冒頭の一文だけにWhy・Whatを担わせず、本文全体で論点と説明のつながりを保つ。
+<a id="文書構成テンプレートの選択"></a>
+## Choosing a document structure template
 
-   何を理解するための説明かと、主題をどの論点へ分解するかを先に示す。操作や処理の手順は、それを必要とする論点の下で説明する。文書全体の説明構造を、実行順に並べた手順だけで代用しない。
+For explanations of technical concepts, mechanisms, and uses, choose a [document structure template](technical-writing-templates.md) that suits the audience and purpose. Background First starts with the situation and need. Definition First connects the definition and purpose to problems and their responses. Concept to Realization connects a concept to a particular system’s design decisions and runtime behavior. Authors may specify the Japanese name, English name, or ID. The catalog defines the selection procedure, default, and outline of each template.
 
-4. **主題と補足を区別し、詳細を扱う位置を決める。** 背景、派生的な概念、実装上の細部を、冒頭や見出しで中心課題に見せない。何のための説明かを示し、その目的に必要な深さで展開する。
+The shared writing principles above and the rules below apply to every template. Develop the reasoning in the Core from the subject and organize it according to the chosen outline. Keep the template name and rationale in the authoring record. Respect the required structure of the document type and the contract of its DSL.
 
-5. **リード、見出し、図表、箇条書き、まとめで斜め読みできる構成にする。** これらだけを読んでも、文書の目的・対象、主要な概念と仕組み、判断に必要な条件、結論を把握できるようにする。本文は、その主張の根拠や詳細を説明する。斜め読みで説明の流れと適用条件が保たれているかを確認し、図表や箇条書きは説明上の役割に応じて使う。
+<a id="節小節の説明パターン"></a>
+## Section explanation patterns
 
-## 文書構成テンプレートの選択
+For each section and subsection, choose a [section explanation pattern](technical-writing-patterns.md) suited to its question. The catalog includes Definition, Rationale, Problem–Solution, Decomposition, Mechanism, Comparison, Procedure, and Worked Example. Identify the document’s overall structure, each unit’s pattern, and the relationships supporting its claims.
 
-技術の概念・仕組み・活用を説明する文書では、[文書構成テンプレート](technical-writing-templates.md)から、目的と読者に合う章立てを名前で選ぶ。背景・必要性から展開する「背景導入型（Background First）」と、定義・目的から課題と対応を展開する「定義・課題対応型（Definition First）」を用意する。日本語名・英語名・IDのいずれでも指定できる。選択方法、初期選択、各型の章立ては同カタログを正本とする。
+At the Core stage, connect each unit’s question, necessary context, claim, and supporting explanation. Show the pattern and the content of its parts in the logic-tree review view, then write the text accordingly. Apply this recursively, allowing parent and child patterns to differ. The catalog governs pattern definitions, storage, display, drafting, and verification.
 
-テンプレートは説明の配置を選ぶものであり、上記の説明原則と以降の共通ルールは、どの型でも適用する。Coreの論理関係は、選んだ章立てに合わせて題材から組み立てる。テンプレート名・選択理由等は執筆用情報として管理し、文書種別固有の必須構造や、利用するDSLの契約に従う。
+<a id="ロジックツリーの論理関係"></a>
+## Logical relationships in the logic tree
 
-## 節・小節の説明パターン
+Show how each child answers its parent’s question and how one claim relates to another. Choose relationships that express the reasoning in the subject matter.
 
-各節・小節では、[説明パターン](technical-writing-patterns.md)から、その単位が答える問いに合う型を選ぶ。定義型、必要性型、課題対応型、構成分解型、仕組み型、比較選択型、実施方法型、具体例型を用意する。文書全体の章立て、各単位の説明パターン、主張を支える論理関係をそれぞれ明らかにする。
+**Table 1. Relationships to make explicit in a logic tree**
 
-Coreの段階で、各単位の問い・必要な文脈・主張・パターンに沿うブレイクダウンを対応付ける。ロジックツリーの確認用表示にも、説明パターンとその役割ごとの内容を示し、本文はその構造に沿って記述する。これを小節以下にも再帰的に適用し、親と子で異なるパターンを選べる。パターンの定義、保持・表示方法、本文への展開と確認は同カタログを正本とする。
-
-## ロジックツリーの論理関係
-
-ロジックツリーでは、各主張と、それを支える説明の関係を明示する。見出しを階層化することに加え、子の説明がどのように親の問いに答えるか、ある主張が別の主張とどのようにつながるかを表す。
-
-説明する内容に応じて、次のような関係を使う。
-
-表1　ロジックツリーで明示する説明上の関係
-
-| 関係 | 明らかにすること |
+| Relationship | What to establish |
 | --- | --- |
-| 構成・論点分解 | 親の対象や問いを、どの構成要素・論点に分けて説明するか。 |
-| 根拠・導出 | どの事実や前提が、なぜその主張を支えるか。複数の根拠を合わせて述べる場合は、その組み合わせも示す。 |
-| 因果 | どの条件の下で、何が作用し、どの結果を生むか。 |
-| 前提・条件 | その主張や効果が成り立つために、何が必要か。 |
-| 具体化・例示 | 定義や一般的な説明を、どの詳細・具体例で説明するか。 |
-| 比較・選択肢 | 同じ問いに対する対象・選択肢を、どの共通の軸や選択条件で比べるか。 |
+| Composition or decomposition | Which components or questions explain the parent subject. |
+| Evidence or derivation | Which facts or premises support the claim and why. Show how multiple grounds work together when needed. |
+| Cause and effect | What acts, under which conditions, and with what result. |
+| Premise or condition | What must hold for the claim or effect to apply. |
+| Elaboration or example | Which detail or concrete case explains the definition or general claim. |
+| Comparison or alternatives | Which options answer the same question and which common criteria or conditions distinguish them. |
 
-関係は、その文書の具体的な内容で説明する。「根拠」「因果」などの名称を付けるだけでなく、何が何を支え、なぜそう言えるのかを文として書けるようにする。関係を説明できない箇所は、主張、根拠、論点の分け方を見直す。
+State the substance of each relationship in words. If the reason one point supports another is unclear, revisit the claim, the evidence, or the decomposition. Use `next` for reading or execution order. Express logical support separately. Linking a pre-existing outline with `next` alone does not establish a logic tree.
 
-`next` は読む順序や実行順序を表す場合に使う。論理関係は、読む順序とは別に明示する。作成済みの章立てを `next` で結んだだけのものを、論理関係を組み立てたロジックツリーとして扱わない。
+Build the claims and logical relationships before choosing their reading order. Check the whole document and each section for parent–child correspondence and traceable evidence, conditions, and composition. Use the DSL’s defined relationships when recording them.
 
-主張と論理関係を組み立ててから、読者が理解できる説明順を決める。文書全体と各節について、子の説明が親の主張・問いに対応しているか、根拠・条件・構成などのつながりを追えるかを確認する。データの記述には、利用するDSLの正規の関係定義に従う。
+For a document with a Content Core, perform this check before drafting. From the root through the subsections, identify each question, necessary context, claim, and supporting points. Develop why and what in the Core and explain the actual reasons, causes, and conditions. Turn these relationships into reader-facing prose.
 
-Content Coreを持つ文書では、本文の執筆前にCoreの段階でこの確認を行う。文書全体から各節・小節まで、それぞれが答える問い、必要な背景・課題・目的、主張、そのブレイクダウンを明らかにする。WhyとWhatの展開、親子の論点、理由・原因・成立条件をCoreに明示し、それぞれの関係を具体的な内容で説明できる状態にする。本文は、Coreにある論理関係を読者向けの説明へ展開する。
+At final review, follow just the headings and openings to check the progression of questions and claims. Then identify which claim each passage, child section, figure, table, or list supports through evidence, mechanism, condition, or example. Check the full explanation under each claim. Where writing exposes a missing relationship or evidence, correct the Core. Validate DSL syntax and references and assess the reasoning separately. Fluent transitions cannot supply a missing premise.
 
-仕上げでは、見出しと各単位の冒頭だけを追い、論点と主張の流れを把握できるかを確認する。さらに、各単位の本文・子節・図表・箇条書きが、どの主張の根拠・仕組み・条件・具体化に当たるかを確認する。主張の一文を先頭へ追加するだけで済ませず、その下の説明全体を主張に沿って構成する。
+<a id="執筆情報と読者向け情報の境界"></a>
+## Authoring information and reader-facing content
 
-文章化の際に説明できない関係や不足する根拠が見つかったら、Coreへ戻って補う。接続詞や流暢な文章を足して、論理の不足を覆わない。Coreの構文・参照の検査に通ることと、主張と根拠の関係が妥当であることは、それぞれ確認する。
+Select content that helps the intended reader understand, judge, or act. Use audience and editorial instructions to choose the material, structure, and level of detail. Keep requests, prompts, editorial policies, review history, production steps, handoffs, and internal decisions in authoring records or journals. Publishing those instructions as claims or evidence burdens the reader with production history.
 
-## 執筆情報と読者向け情報の境界
+Extract any technical rationale from an instruction and explain the subject’s purpose, mechanism, premises, and constraints. Retain definitions, evidence, scope, implementation status, and known limits needed to judge a claim.
 
-**本文へ入れる情報は、想定読者が対象を理解・判断・実行するために必要なものを選ぶ。** 執筆者が知っておく必要があることと、読者へ説明する必要があることを区別する。対象や読者に関する執筆指示は、内容・構成・粒度の選択へ反映する。
+Separate public claims, reasons, and conditions from writing instructions at the Content Core stage. Store private notes in supported private fields or separate material. Keep the published tree, shared claims, Documents, and derived manuscripts free of authoring notes. Use only defined DSL fields.
 
-執筆依頼、プロンプト、編集方針、レビューコメント、修正の経緯、制作手順、担当者間の申し送り、内部の採用・不採用理由は、執筆用資料やジャーナル等で管理する。これらを本文の主張・根拠・結論として転記しない。制作事情や過去のやり取りを説明するためだけの文を加えない。
+The following examples illustrate the distinction:
 
-技術的なWhyは、読者に必要な説明として展開する。執筆指示が技術的な理由を含む場合は、指示の言い回しから、対象の目的・仕組み・前提・制約を取り出して説明する。用語の定義、根拠、適用範囲、実装状況、既知の制約など、主張を正しく理解・判断するための情報は保持する。
+- An instruction to assume engineers know basic authentication sets the level of detail. Apply it directly.
+- Keep a reviewer’s request for a duplicate-execution example in the journal. Explain in the article how repeated execution can increase I/O and latency even when the result is unchanged.
+- Give compared versions, sources examined, and feature support when readers need them to interpret the result.
+- Retain useful reading guidance, such as a note that a table compares cost and quality for identical inputs.
 
-Content Coreの段階で、読者へ伝える主張・理由・条件と、執筆を制御する指示・背景を選別する。執筆用情報を、公開用ツリーの論点や共有主張へ混ぜない。執筆メモを保持する場合は、利用する仕組みが定めた非公開の領域や別資料を使い、独自のDSL項目を追加しない。Documentと派生原稿へ展開する際も、執筆用の情報を本文へ流し込まない。
+At drafting and final review, check whether each passage tells readers something about the subject or merely how the passage was produced. Move production history back to authoring records or extract its relevant technical content. A reader unfamiliar with the writing conversation must be able to understand the document. Judge meaning in context rather than screening for particular words. Apply this check to leads, headings, labels, captions, lists, summaries, notes, slides, and scripts, including footnotes and figures.
 
-次の例は、情報を読者向けに扱う際の判断を示す。
+<a id="文体と表現"></a>
+## Style and expression
 
-- 「エンジニア向けなので認証の初歩的な説明は省く」という指示は、説明の粒度へ反映する。本文でその執筆方針を説明しない。
-- 「レビューで重複実行の例を入れるよう指摘された」という経緯はジャーナルへ置く。本文では、結果が同じでも重複実行がI/O回数やレイテンシを増やすという、対象の性質を説明する。
-- 比較対象のバージョン、確認した資料の範囲、機能の対応状況は、読者の判断に必要な条件として明示する。
-- 「表では同一入力に対する費用と品質を比較する」など、内容の理解に役立つ目的・範囲・読み方の案内は残す。
+6. **Explain facts, mechanisms, conditions, and causal relationships plainly.** Avoid attention-seeking contrasts, dramatization, unsupported declarations, and claims about the importance of the document itself. Describe relevant limits, unsupported cases, and differences with their subjects and conditions.
 
-執筆時と仕上げ時に、各説明が「対象について読者が知るべきこと」か、「その文章をどう作ったかという事情」かを確認する。後者は執筆用資料へ戻すか、必要な技術的内容へ書き直す。執筆会話を知らない読者が、独立した文書として理解できる状態にする。特定の語句を禁止するだけの判定にはしない。
+   Open a section with the concrete background, problem, or purpose leading to its claim, or with the definition or function when context is already established. In Japanese prose, openings such as 「Xではない」「Xだけでは足りない」「Yして初めて意味がある」 draw attention to negation or judgment. When discussing an error or limitation, identify the actual subject, condition, and problem.
 
-この確認は本文の段落だけでなく、リード、見出し、図表のラベルとキャプション、箇条書き、まとめ、注記、要約、スライド、動画台本にも適用する。執筆用情報を脚注・補足・図表へ移しただけで、読者向けに整理したとは扱わない。
+   Read the lead and the first sentence of each section in isolation. Rewrite attention-seeking openings using a clear subject, action, and condition. Then check that the rest of each section develops its opening points and places procedures within that explanation. Reworking an opening sentence alone leaves structural problems in the body unresolved.
 
-## 文体と表現
+7. **Replace abstract praise with effects and evidence.** Explain what the mechanism describes, checks, or executes, where constraints apply, and what improves under which conditions. For measured effects, report both the conditions and results.
 
-6. **事実、仕組み、適用条件、因果関係を淡々と説明する。** 否定や対比で注意を引く書き出し、劇的な演出、根拠を示さない結論の宣言、文書自身の意義を強調する表現を避ける。必要な制約・非対応・相違点は、対象と条件を明示して述べる。
+8. **Keep sentences and paragraphs focused.** Give each paragraph one claim and its support. Remove unnecessary previews, restatements, and lengthy explanations of concepts the intended readers already know.
 
-   リードと各節・小節の冒頭では、主張につながる背景・課題・目的などを具体的に示す。文脈が共有されている場合は、対象の定義・働きなどの要点から始めてよい。「Xではない」「Xだけでは足りない」「Yして初めて意味がある」といった否定・対比・価値付けを導入の型にしない。誤りや制限を扱う場合も、対象と条件、その箇所で扱う問題を具体的に説明する。
+<a id="技術の可能性と適用条件の伝え方"></a>
+## Possibilities and conditions of use
 
-   執筆後は、リードと各節の第1文を抜き出して読み、見出しの内容を具体的に説明し始めているかを確認する。注意を引くための否定や対比があれば、主語と動作・条件が明確な説明へ書き換える。
+Connect what the technology enables and what it aims to achieve with its mechanism and implementation conditions. Describe future possibilities through concrete uses, structure, behavior, and a path to realization.
 
-   続けて、各節の冒頭と本文の対応を確認する。冒頭で示した内容が論点ごとに説明されているか、手順がその説明の中に位置付いているかを見る。劇的な導入を平易な一文へ直しただけで、節全体の説明構造を修正したとは扱わない。
+Attribute methods, design choices, and views to their proponents. Identify what the project adopts, how it interprets the concept, and why. Distinguish general definitions from project-specific choices. Introduce the responsible party where relevant and reuse that context. Avoid claims of unique optimality and disclaimers denying such claims.
 
-7. **抽象的な評価語を、具体的な作用と根拠に置き換える。** 「極めて有効」「強力」と書く代わりに、何を記述・検査・実行し、どこに制約が働き、どの条件で何を改善するかを示す。効果を測定している場合は、測定条件と結果を示す。
+Generally omit disclaimers aimed solely at anticipating criticism or misunderstanding. Combine the facts and conditions readers need with the explanation they qualify. Identify proposals, hypothetical examples, and illustrative numbers at the point of use. Give comparison conditions, measurement scope, and responsibilities where they explain the mechanism or result.
 
-8. **文と段落を簡潔にし、説明のつながりを明らかにする。** 一文に論点を詰め込まず、一段落では一つの主張とその根拠・説明を扱う。読者に不要な予告、同じ内容の言い換え、想定読者が理解している一般概念の長い説明を省く。
+Describe implemented capabilities, designs, and future plans according to their actual status. Ground possibilities and paths forward in the available evidence. Avoid introducing extraneous assumptions just to dismiss them or repeatedly qualifying a claim with general warnings. At final review of the Core and text, trace each conclusion through purpose, mechanism, and conditions. Revise endings where a precautionary disclaimer has displaced the conclusion.
 
-## 技術の可能性と適用条件の伝え方
+<a id="主張と根拠"></a>
+## Claims and evidence
 
-**技術で可能になること、目指す姿、それを支える仕組みと実現条件を、淡々とつないで説明する。** 将来像は、具体的な用途、構造、作用、発展の道筋として描く。強い形容や劇的な演出に頼らず、読者がその技術を使って広げられる可能性を捉えられる説明を目指す。
+9. **Distinguish capability, intermediate outcome, and final outcome.** Explain the conditions and causal steps connecting them. To move from recording data to solving a problem, account for the analysis, decision, and action in between.
 
-手法・設計・見解は、誰の採用・選択・主張かを明らかにして述べる。対象プロジェクトの方式を説明するときは、そのプロジェクトが何を採用し、どう捉え、なぜそうするかを示す。一般的な概念の定義と、独自の構成・解釈・選択を区別する。主体が分かる説明により、その立場での主張を淡々と伝える。最適解・唯一の解といった断定を持ち込まず、それを否定する免責も付け加えない。主体は導入や該当する節で示し、各文で繰り返す必要はない。
+10. **Identify the subjects, criteria, and conditions of comparison.** Explain the properties that affect the conclusion. For performance or cost comparisons, align inputs, load, environment, and accounting scope, or state the differences.
 
-免責の記述は基本的に使わない。誤解や批判を予防することだけを目的とした断り書き、一般的な注意書き、繰り返す留保を加えない。可能性や仕組みを述べた直後に「保証するものではない」「すべてを実装済みという意味ではない」「唯一の最適解ではない」等を付け、説明の主線を疑念や打ち消しへ転じる構成を避ける。
+11. **Match the strength of each claim to the evidence.** Distinguish verified facts, inferences, proposals, implemented capabilities, and future plans. Mark hypothetical examples and values where introduced. Put qualifications with the claim they limit.
 
-判断に必要な事実と条件は、対象の説明へ簡潔に組み込む。設計案は設計案として、仮想例・仮の数値はその例や表題で示す。比較条件、測定範囲、機構の役割分担は、仕組みや結果を理解するための具体的な情報として述べる。内容を正確に述べるために必要な条件を、段落末の一般的な免責へ置き換えない。
+12. **State decision premises and criteria and trace how the method works.** Distinguish problem, cause, remedy, result, and evaluation criterion. Relate the method to the requirement or quality attribute it addresses. Explain the mechanism behind a term or analogy.
 
-実装済みの機能、設計、将来像は、それぞれの状態に合う表現を使う。将来像を実績として述べず、確認した根拠に沿って可能性と実現への道筋を説明する。適用範囲外の仮定を自ら持ち出して否定したり、未依頼の注意事項を繰り返したりして、読者の理解の流れを中断しない。
+13. **Connect each example to its point.** Identify what the example demonstrates and give enough detail to relate it to the general explanation. Regroup concepts and examples if switching between them obscures the purpose.
 
-Coreと本文を仕上げる際は、主張が目的・仕組み・条件から結論へつながっているかを確認する。説明に必要な条件はその位置へ置き、予防的な免責が結論や余韻を占めている場合は、説明構造と表現を見直す。
+<a id="用語と図表箇条書き"></a>
+## Terminology, figures, tables, and lists
 
-## 主張と根拠
+14. **Use the target project’s canonical glossary forms.** Use the canonical Japanese name in Japanese and the corresponding English name in English. Convey the same claim in both languages. Explain how unfamiliar concepts fit and link to fuller definitions. Follow project conventions for proper names, official abbreviations, and code identifiers.
 
-9. **手段の能力、中間的な成果、最終的な成果を区別する。** それらを結ぶ条件と因果関係を示す。「記録できる」から「問題を解決できる」へ進む場合は、その間に必要な分析・判断・対応を説明する。
+15. **Explain the purpose of each figure, table, and list and how to read it.** Figures show relationships or flows, tables show comparisons or mappings, and lists group items with an identifiable purpose. Number and title figures and tables. Introduce each list with a sentence explaining its purpose. Use intelligible labels and explain what connections in a diagram mean.
 
-10. **比較する対象、比較軸、適用条件を明確にする。** 名称だけを並べず、結論を左右する性質を示す。性能や費用の比較では、入力、負荷、環境、算定範囲などの条件をそろえるか、条件差を明示する。
+   Decide what the table helps readers understand, compare, or judge. Link it to a specific point, then select subjects and criteria accordingly. Identify what a mapping or composition table relates.
 
-11. **主張の強さを根拠に合わせる。** 確認した事実、推論、設計案、実装済みの機能、将来の計画を区別する。仮想例や仮の数値はその場で明示する。技術的な主張と適用範囲は具体的に述べ、必要な限定を同じ位置に置く。
+   Choose specific row and column headings. Describe all subjects using common criteria, granularity, and conditions so the relevant similarities, differences, and correspondences are visible. Omit unrelated columns and cells that use inconsistent criteria.
 
-12. **判断に必要な前提と基準を示し、手段が働く道筋を説明する。** 課題、原因、対策、結果、評価基準を区別する。手法を、それが応える要求や品質属性と結び付ける。用語の名称や比喩だけで、仕組みを説明したことにしない。
+   State the table’s purpose in the preceding sentence and its title. Check what the reader can learn or decide from it. Reconsider a table whose purpose cannot be explained.
 
-13. **具体例を説明する論点に対応付ける。** 何を確かめる例かを示し、抽象的な説明との対応が分かる分量で書く。詳細説明と例の往復によって全体の目的が見失われる場合は、概念説明と具体例をまとめ直す。
-
-## 用語と図表・箇条書き
-
-14. **技術用語は対象プロジェクトが定める用語集の正規表記に統一する。** 日本語では正規日本語名、英語では対応する正規英語名を使い、両言語で同じ主張を伝える。なじみの薄い概念は文書内での位置付けを説明し、詳しい定義へリンクする。固有名、正式な略語、コード識別子は対象プロジェクトの用語定義方針に従う。
-
-15. **図、表、箇条書きの目的と読み方を明らかにする。** 図では関係や流れ、表では比較軸と対応、箇条書きでは並べる項目の意味を示す。図表には番号と内容を表すタイトルを付け、箇条書きの直前にはその目的を示す一文を置く。本文をすべて読まなければ意味が分からないラベルや、関係の意味が不明な箱と線を避ける。
-
-   表は、何を理解・比較・判断するためのものかを先に定める。記事や節のどの論点を説明する表かを明確にし、その目的に即して、比較する対象と比較軸を選ぶ。対応表や構成表でも、何と何の対応・構成を読み取るための表かを定める。
-
-   行・列の見出しは、対象と比較軸が分かる具体的な名称にする。各対象を共通の軸・粒度・条件で記述し、目的の判断に必要な共通点・相違点・対応が読み取れるようにする。目的に関係しない列や、対象ごとに異なる観点を書き込んだセルを増やさない。
-
-   表の直前の一文とタイトルで、その目的を示す。「次の表にまとめます」だけで済ませず、何を見るための表かを説明する。作成後は、表から何が分かり、どの判断に使えるかを確かめ、目的が説明できない場合は表の必要性から見直す。
-
-16. **ASCIIアートによる図は禁止する。** 関係や流れを図示する場合はPNG画像を作成して掲載する。文字だけで十分に伝わる内容は文章で説明する。コード例や識別子中のASCII文字は、この規則の対象外とする。
+16. **Do not use ASCII-art diagrams.** Create and include a PNG image for a relationship or flow that calls for a diagram. Use prose where text suffices. ASCII characters in code examples and identifiers are outside this restriction.
