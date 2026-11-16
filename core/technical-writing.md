@@ -35,7 +35,7 @@ Apply this structure recursively to the document, chapters, sections, subsection
 <a id="文書構成テンプレートの選択"></a>
 ## Choosing a document structure template
 
-For explanations of technical concepts, mechanisms, and uses, choose a [document structure template](technical-writing-templates.md) that suits the audience and purpose. Background First starts with the situation and need. Definition First connects the definition and purpose to problems and their responses. Concept to Realization connects a concept to a particular system’s design decisions and runtime behavior. Authors may specify the Japanese name, English name, or ID. The catalog defines the selection procedure, default, and outline of each template.
+For explanations of technical concepts, mechanisms, and uses, choose a [document structure template](technical-writing-templates.md) that suits the audience and purpose. Background First starts with the situation and need. Definition First connects the definition and purpose to problems and their responses. Concept to Realization connects a concept to a particular system’s design decisions and runtime behavior. Comparison and Selection compares alternatives on a shared basis and explains the conditions for choosing each. Authors may specify the Japanese name, English name, or ID. The catalog defines the selection procedure, default, and outline of each template.
 
 The shared writing principles above and the rules below apply to every template. Develop the reasoning in the Core from the subject and organize it according to the chosen outline. Keep the template name and rationale in the authoring record. Respect the required structure of the document type and the contract of its DSL.
 

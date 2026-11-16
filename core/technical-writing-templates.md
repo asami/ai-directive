@@ -19,6 +19,7 @@ The [Technical Writing Rules](technical-writing.md) govern reasoning, style, evi
 | 背景導入型 | Background First | `background-first` | Establish the situation and need, then explain the subject, its parts, and its use. | Readers need to understand why the subject matters before examining it in detail. |
 | 定義・課題対応型 | Definition First | `definition-first` | Define the subject and its purpose, identify the problems, then explain how the parts work together to address each one. | Readers need to understand what a technology does and how it addresses particular problems. |
 | 概念・実現解説型 | Concept to Realization | `concept-to-realization` | Connect a concept to a system’s design decisions and trace those decisions through a concrete example at runtime. | Readers can use a familiar concept to understand how a particular system is designed and implemented. |
+| 比較・選択型 | Comparison and Selection | `comparison-and-selection` | Compare alternatives against a shared purpose, conditions, and evidence, then explain which fits which circumstances. | Readers need to choose among ways of meeting the same need and understand the tradeoffs behind the choice. |
 
 Accept the Japanese name, English name, or ID. Match English names case-insensitively. Use the template the user specifies. When continuing an existing document, preserve its chosen structure and explanatory approach. For a new explanatory document with no specified template, default to Background First, which follows the why–what–how sequence. If another template better suits the subject and audience, record the choice in the authoring notes.
 
@@ -92,6 +93,33 @@ Within a concept section, consider why the concept matters, what it means, which
 
 Give readers the definitions and sources they need at the point of use. Put cross-source terminology tables and comprehensive indexes in an appendix for later reference.
 
+<a id="比較選択型"></a>
+<a id="比較・選択型"></a>
+## Comparison and Selection
+
+ID: `comparison-and-selection`
+
+Choose this template when the document’s central question is which approach fits a shared need under stated conditions. By the end, readers should be able to compare the alternatives on common criteria, trace the findings to their grounds, and explain the conditions for choosing each approach. The structure was developed from a comparison of four development methods applied to the same order-management system over several years.
+
+| Order | Section role | What to include |
+| --- | --- | --- |
+| 1 | Lead | State the decision readers face and the main finding, including the conditions that qualify it. Identify the alternatives and scope. |
+| 2 | Decision context and purpose | Describe the situation, desired outcome, constraints, and who must make the decision. Explain why the differences among the alternatives matter to that decision. |
+| 3 | Common comparison basis | Define the alternatives, their scope, and the criteria derived from the purpose. Establish shared requirements, starting conditions, available resources, and observable acceptance conditions. Identify sources, applicable versions, and the evidence available for each criterion. |
+| 4 | How each alternative works | Explain each approach using the same questions and criteria: what it represents, who does the work, how it produces the required outcome, and what it requires. Give the reasons for its strengths, limitations, and costs. Use comparable, feasible forms of each approach. |
+| 5 | Worked comparison | Follow the same case through each approach. Keep the required outcome and relevant starting conditions common, trace the work and results, and identify what readers can inspect. When lifecycle or handoff matters, carry the same case through a shared sequence of changes. |
+| 6 | Findings and tradeoffs | Bring the findings together by criterion. Explain which mechanisms account for the differences and what benefits, burdens, or limitations follow. Use a comparison table to summarize findings already supported by the explanations and case. |
+| 7 | Selection conditions | Explain which approach fits which requirements, constraints, skills, and available components or infrastructure. Identify the tradeoffs that can change the choice and the remaining checks needed to decide. Where the evidence is insufficient, state what remains undecided. |
+| 8 | Summary | Answer the opening decision with its conditions, principal grounds, and limits. State what readers need to verify in their own setting. |
+
+Derive the evaluation criteria from the reader’s purpose before assessing the alternatives. Explain why each criterion matters and how it will be judged. Distinguish requirements every acceptable option must meet from preferences that involve tradeoffs. If priorities or weights affect the recommendation, explain their basis and how a change in them could change the choice. An unavailable or unexamined capability remains a limitation or unknown in the comparison.
+
+Use the same terms and comparison questions for each alternative. Explain its mechanism before drawing conclusions from a summary table. When versions, deployment conditions, resources, or scope differ, state how that difference affects the judgment. Distinguish documented capabilities, design reasoning, illustrative cases, and measured results. A worked design example can explain an expected difference; it does not establish measured effort, performance, or superiority.
+
+In the order-management example, all four methods face the same two-warehouse change. An order needs ten units; the first warehouse holds six, and the second cannot supply four. Once release is agreed, the common acceptance conditions are release of the six units, zero allocated units, and zero shipment instructions. Useful comparison questions are where the current rule is read, what must change, how far the impact extends, what can be reused, how the result is checked, and how the decision and its reasons reach the next maintainer or AI. Follow those questions through each method and through later changes. Select criteria for other subjects from their own decision context.
+
+Use this template when comparison and conditional selection organize the whole document. Use Definition First when the main task is to explain one subject and its responses to problems, or Concept to Realization when the main task is to trace one system’s design into execution. A local comparison within either document can use the [Comparison section pattern](technical-writing-patterns.md#パターンの選択). The document template and section pattern have distinct IDs; apply Definition, Mechanism, Worked Example, or other section patterns where they support the comparison.
+
 <a id="共通ルールとの組合せ"></a>
 ## Applying the shared rules
 
@@ -103,6 +131,8 @@ Labels such as “introduction,” “working definition,” and “structure”
 
 Examples of template requests include:
 
+- “Use Comparison and Selection to compare development methods on the same requirements and explain when to choose each.”
+- “Use `comparison-and-selection` to compare deployment options under the same availability and cost constraints.”
 - “Use Concept to Realization to explain how the system maintains order consistency at runtime.”
 - “Use Background First to explain the context and need.”
 - “Write this using Background First.”

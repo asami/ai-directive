@@ -26,9 +26,12 @@ Project rules supply site-specific glossary, language and publication convention
 [Technical Document Structure Templates](core/technical-writing-templates.md)
 provides named structures for explanatory documents: Background First
 (背景導入型, `background-first`), Definition First
-(定義・課題対応型, `definition-first`), and Concept to Realization
-(概念・実現解説型, `concept-to-realization`). Select a structure by its Japanese name,
-English name or ID while applying the shared writing rules.
+(定義・課題対応型, `definition-first`), Concept to Realization
+(概念・実現解説型, `concept-to-realization`), and Comparison and Selection
+(比較・選択型, `comparison-and-selection`). The fourth template compares alternatives
+under shared conditions and explains which fits which circumstances. Select a
+structure by its Japanese name, English name or ID while applying the shared
+writing rules.
 [SmartDox Authoring Rules](core/smartdox-authoring.md) supplies Dox syntax rules.
 
 ## Project Setup
