@@ -26,12 +26,45 @@ Choose one principal pattern for each section or subsection according to the que
 | 比較選択型 | Comparison | `comparison` | How do the options compare? If a choice is needed, which option fits which conditions? | State the main finding, then compare the options on common criteria and give the supporting evidence. When the section calls for a decision, explain the conditions for choosing. | Explain the relevant similarities and differences and why they matter. For a decision, identify which option fits the stated conditions and why. |
 | 実施方法型 | Procedure | `procedure` | How do we do it? | State the goal, outline the method, give prerequisites and steps, and verify the result. | Recognize when the prerequisites hold, carry out the steps, and check the outcome. |
 | 具体例型 | Worked Example | `worked-example` | What happens in practice? | Identify the point and summarize the case, trace conditions, behavior, and results, then relate them to the general explanation. | Trace the case from its starting conditions to its result and identify the general point it illustrates. |
+| 検証・評価型 | Verification and Evaluation | `verification-and-evaluation` | What does the evidence establish about the claim, and within which limits? | State the evaluation question and main judgment, then connect criteria, subject and conditions, evidence and results, and interpretation to the bounded conclusion. | Judge what the evidence supports against stated criteria and identify the conditions, limits, and remaining unknowns. |
 
 Choose Rationale to explain a need and Problem–Solution to develop a specific response. Decomposition explains parts and relationships. Mechanism explains how an action produces a result. For a comparison without a selection, give the similarities and differences as the central answer, followed by the evidence and the conditions relevant to judgment.
 
 Apply patterns recursively. A Decomposition section may have Definition or Mechanism subsections for individual parts. Split independent questions and claims into subsections where appropriate. A short paragraph can cover several explanatory roles in one sentence. Open the parent section with its answer and explain how its supporting points fit together. Give each child a distinct question that develops one of those points, using the context already established by the parent.
 
 For example, a section on order consistency might open with “An order update must satisfy the rules for the order as a whole and the conditions for committing the update.” One subsection answers “What rules must the proposed order satisfy?” A second answers “When can that validated update be committed?” Together they explain how a valid proposal becomes a committed change.
+
+<a id="検証評価型"></a>
+<a id="検証・評価型"></a>
+## Verification and Evaluation
+
+ID: `verification-and-evaluation`
+
+Choose this pattern when a section evaluates a claim against explicit criteria using available evidence. Establish the question and state the current judgment near the opening, with the conditions that qualify it. An inconclusive judgment is a valid answer when the evidence does not establish the claim. Develop the supporting explanation in the following order, using subheadings only where the material warrants them.
+
+| Order | Supporting role | What to establish |
+| --- | --- | --- |
+| 1 | Claim and criteria | Identify what is being evaluated, why it matters, and what would count as meeting the requirement or supporting the claim. Define the relevant measures, expected outcomes, or reasoning criteria. |
+| 2 | Subject and conditions | Identify the evaluated artifact or system, applicable version, configuration, inputs, environment, and scope at the level needed to interpret the result. |
+| 3 | Evidence and results | Identify the evidence, its source, and how it was obtained. Give the relevant observations, measurements, executed specification results, inspection findings, or derivation. Distinguish expected outcomes from obtained results. |
+| 4 | Interpretation | Relate each relevant result to the criteria and explain why it supports, contradicts, or leaves the claim unresolved. Separate the evidence from the inference drawn from it, addressing uncertainty or alternative explanations where they affect the judgment. |
+| 5 | Judgment and limits | Return to the opening judgment. State what is established under the given conditions, what is not established, and which missing evidence would change or complete the assessment. |
+
+Use evidence suited to the claim and identify what it can establish. A specification states the required behavior; implementation inspection can establish that a check exists; an executed test or measurement records a result for the exercised version and conditions. A derivation supports a conclusion under its premises. Keep those grounds distinct and limit the judgment accordingly. A planned check or hypothetical walkthrough does not establish an observed execution result. Missing evidence remains an unknown, and a successful case does not by itself establish behavior outside the conditions it covers.
+
+### Choosing among Procedure, Worked Example, and Verification and Evaluation
+
+Choose the principal pattern from the reader’s question and the section’s intended result. All three can discuss the same operation, but their supporting explanations serve different purposes.
+
+| Pattern | Central question | What the explanation must deliver | Order-update example |
+| --- | --- | --- | --- |
+| Procedure (`procedure`) | How do I perform the check? | Prerequisites, actions in execution order, and a way to check the outcome. | Explain how to submit an update with a stale expected revision and inspect the rejection and stored order state. |
+| Worked Example (`worked-example`) | How does this case illustrate the behavior? | A trace from the case’s conditions through behavior to its result and the general point illustrated. | Follow an order with a stale expected revision through the rejection path and explain the role of the revision check. Identify whether the case is hypothetical or observed. |
+| Verification and Evaluation (`verification-and-evaluation`) | What does the evidence establish? | Criteria, attributable evidence and results, interpretation, and a judgment bounded by the evaluated conditions. | Explain whether the available test results establish rejection without a state change for the version and conditions tested. |
+
+A Procedure section can specify an expected result so that readers can check their work. A Worked Example can use an observed case or describe predicted behavior under explicit assumptions. Choose Verification and Evaluation when the main task is to assess what the evidence warrants. When these are independent reader questions, give them separate subsections: a Procedure can describe the method used, and a Worked Example can illustrate one result within an evaluation. Keep the evaluation criteria and final judgment in the parent evaluation section. Use Comparison when the main question concerns differences among alternatives and the conditions for choosing them.
+
+In the Core and review view, connect the evaluation question, scoped judgment, criteria, evidence and results, interpretation, and limits using the existing supported mechanisms. Keep evidence, inference, and applicability conditions distinguishable. The pattern ID is an authoring selection, not a new logical relation or an authorization to extend the Core or Document DSL.
 
 <a id="coreとロジックツリーでの表現"></a>
 ## Representation in the Core and logic tree

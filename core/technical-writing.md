@@ -42,9 +42,9 @@ The shared writing principles above and the rules below apply to every template.
 <a id="節小節の説明パターン"></a>
 ## Section explanation patterns
 
-For each section and subsection, choose a [section explanation pattern](technical-writing-patterns.md) suited to its question. The catalog includes Definition, Rationale, Problem–Solution, Decomposition, Mechanism, Comparison, Procedure, and Worked Example. Identify the document’s overall structure, each unit’s pattern, and the relationships supporting its claims.
+For each section and subsection, choose a [section explanation pattern](technical-writing-patterns.md) suited to its question. The catalog includes Definition, Rationale, Problem–Solution, Decomposition, Mechanism, Comparison, Procedure, Worked Example, and Verification and Evaluation. Identify the document’s overall structure, each unit’s pattern, and the relationships supporting its claims.
 
-At the Core stage, connect each unit’s question, necessary context, claim, and supporting explanation. Show the pattern and the content of its parts in the logic-tree review view, then write the text accordingly. Apply this recursively, allowing parent and child patterns to differ. The catalog governs pattern definitions, storage, display, drafting, and verification.
+At the Core stage, connect each unit’s question, necessary context, claim, and supporting explanation. Show the pattern and the content of its parts in the logic-tree review view, then write the text accordingly. Apply this recursively, allowing parent and child patterns to differ. The catalog governs pattern definitions, storage, display, drafting, and verification. Use Procedure to explain how to perform a check, Worked Example to explain a case, and Verification and Evaluation to judge what evidence establishes against stated criteria and within stated conditions.
 
 <a id="ロジックツリーの論理関係"></a>
 ## Logical relationships in the logic tree

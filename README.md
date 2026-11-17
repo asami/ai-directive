@@ -32,6 +32,11 @@ provides named structures for explanatory documents: Background First
 under shared conditions and explains which fits which circumstances. Select a
 structure by its Japanese name, English name or ID while applying the shared
 writing rules.
+[Section Explanation Patterns](core/technical-writing-patterns.md) provides nine
+named patterns for sections and subsections. Verification and Evaluation
+(検証・評価型, `verification-and-evaluation`) connects evaluation criteria and evidence
+to a bounded judgment. The catalog explains how it differs from Procedure
+(実施方法型, `procedure`) and Worked Example (具体例型, `worked-example`).
 [SmartDox Authoring Rules](core/smartdox-authoring.md) supplies Dox syntax rules.
 
 ## Project Setup
