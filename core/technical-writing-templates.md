@@ -91,6 +91,8 @@ Choose this template when a familiar concept helps explain a system’s design d
 
 Within a concept section, consider why the concept matters, what it means, which design the system adopts, and how that design works. Use as many subheadings as the material warrants. For order consistency, for example, explain why an order without line items cannot be confirmed and which component checks the rule for the entire order. The execution chapter can then show when a valid proposed update is persisted and committed, and how it reaches the read side.
 
+In a worked example, identify the assumptions and describe the behavior the design predicts under those conditions. If the guide also reports confirmed behavior, identify the evidence and its scope where the claim appears. Implementation inspection can establish that a check exists. A test or execution record can establish what happened for the version, configuration, and inputs exercised. For example, a design may require rejection of a stale order update. To report an observed rejection, cite the corresponding test result or execution record and state the resulting order state it actually checked. Carry this distinction into the summary and limit each conclusion to what its evidence supports.
+
 Give readers the definitions and sources they need at the point of use. Put cross-source terminology tables and comprehensive indexes in an appendix for later reference.
 
 <a id="比較選択型"></a>
