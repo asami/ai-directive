@@ -3072,19 +3072,35 @@ def resumeProcessing(): IO[Unit]
 
 This project intentionally restricts the use of Scala 3 indentation-based syntax
 (offside rule) to reduce accidental semantic changes, improve patch stability,
-and lower AI-assisted analysis cost.
+and lower AI-assisted analysis cost. The following Scala 3 authoring rules apply
+to newly written Scala 3 code and code deliberately migrated to Scala 3.
+They do not add compiler policies for Scala 2 or general projects.
+
+## Strict Equality
+
+For all AI-authored Scala 3 code in that scope,
+`import scala.language.strictEquality` MUST be effective at each applicable
+code location. Where code spans separate scopes, each scope must be covered.
+An import appearing only in a comment or string is not effective.
 
 ## Principle
 
 - Structural constructs MUST use explicit braces `{}`.
 - Indentation-based syntax MUST NOT be used to define structural AST boundaries.
-- Indentation-based syntax MAY be used only at AST leaf levels.
+- Indentation-based syntax MAY be used only in terminal implementation regions
+  (AST leaves). A terminal region is defined by its implementation role, not by
+  having no child nodes: an expression tree can be terminal even when its AST
+  contains children.
+- Package, `given`, and `extension` bodies MUST use explicit braces.
+- Lambdas that compose domain or framework structure MUST use explicit braces;
+  being a lambda does not make a structural body a terminal region.
 
 ## Prohibited Uses
 
 Indentation-based syntax MUST NOT be used for:
 
-- class / trait / enum / object definitions
+- package / class / trait / enum / object / given / extension bodies
+- domain or framework structural DSL lambda bodies
 - top-level or nested structural declarations
 - method definitions with non-trivial or evolving bodies
 - multi-level or deeply nested control structures
@@ -3095,7 +3111,7 @@ Indentation-based syntax MUST NOT be used for:
 Indentation-based syntax MAY be used only for:
 
 - small and closed `match` expressions
-- simple expression bodies with no nested structure
+- simple expression bodies without nested structural constructs
 - short `if`, `for`, or `try` expressions at leaf positions
 
 ## Rationale
